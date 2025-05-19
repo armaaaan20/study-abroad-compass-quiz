@@ -22,15 +22,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
+          cache: 'npm'
+          
+      - name: Debug npm and node versions
+        run: |
+          node -v
+          npm -v
           
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --no-optional
+        continue-on-error: false
         
       - name: Build
         run: npm run build
         env:
           NODE_ENV: production
+          
+      - name: List build output
+        run: ls -la dist
           
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
