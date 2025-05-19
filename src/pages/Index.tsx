@@ -13,7 +13,6 @@ const Index = () => {
             Which Country Should You 
             <span className="relative z-10">
               <span className="text-[#174a58] relative z-10"> Study In</span>
-              <span className="absolute -bottom-1 left-0 w-full h-3 bg-[#3b8183]/20 -z-10 transform -rotate-1"></span>
             </span>?
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">

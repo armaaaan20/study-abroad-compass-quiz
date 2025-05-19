@@ -95,10 +95,10 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit }) => {
               id="whatsapp"
               value={whatsapp}
               onChange={(e) => setWhatsapp(e.target.value)}
-              className={`w-full px-3 py-2 border rounded-md pl-12 ${errors.whatsapp ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#3b8183]`}
-              placeholder=" 10-digit number"
+              className={`w-full px-3 py-2 border rounded-md pl-16 ${errors.whatsapp ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#3b8183]`}
+              placeholder="10-digit number"
             />
-            <div className="absolute inset-y-0 left-0 flex items-center px-3 pointer-events-none text-gray-500 border-r border-gray-300">
+            <div className="absolute inset-y-0 left-0 flex items-center px-3 pointer-events-none text-gray-500 border-r border-gray-300 bg-gray-50 h-full rounded-l-md pr-2 font-mono">
               +91
             </div>
           </div>

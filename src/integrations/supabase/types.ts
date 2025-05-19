@@ -60,6 +60,45 @@ export type Database = {
         }
         Relationships: []
       }
+      student_leads: {
+        Row: {
+          answers: Json | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          quiz_result: string | null
+          recommended_countries: Json | null
+          scores: Json | null
+          student_id: string
+          whatsapp: string
+        }
+        Insert: {
+          answers?: Json | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          quiz_result?: string | null
+          recommended_countries?: Json | null
+          scores?: Json | null
+          student_id?: string
+          whatsapp: string
+        }
+        Update: {
+          answers?: Json | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          quiz_result?: string | null
+          recommended_countries?: Json | null
+          scores?: Json | null
+          student_id?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

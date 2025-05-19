@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Country, CountryInfo } from '../types/quiz';
+import { Country } from '../types/quiz';
 import { countriesInfo } from '../data/quizData';
 import LeadCaptureForm from './LeadCaptureForm';
 

@@ -6,6 +6,7 @@ import ProgressBar from './ProgressBar';
 import QuizQuestion from './QuizQuestion';
 import QuizResults from './QuizResults';
 import { toast } from '@/components/ui/sonner';
+import { supabase } from "@/integrations/supabase/client";
 
 const initialState: QuizState = {
   currentQuestionIndex: 0,
@@ -118,28 +119,20 @@ const QuizContainer: React.FC = () => {
       name,
       email,
       whatsapp,
-      primaryCountry: state.result,
-      recommendedCountries: state.topThreeCountries,
+      quiz_result: state.result,
+      recommended_countries: state.topThreeCountries,
       scores: state.scores,
-      answers: state.answers,
-      timestamp: new Date().toISOString()
+      answers: state.answers
     };
     
-    // Log data (will be replaced with Supabase integration)
-    console.log('Lead submitted:', dataToStore);
-    
-    // This is where you would add the Supabase integration
-    // Once Supabase is connected using the Lovable Supabase integration
     try {
-      /* 
       const { error } = await supabase
-        .from('study_abroad_leads')
+        .from('student_leads')
         .insert([dataToStore]);
         
       if (error) throw error;
-      */
       
-      // For now, we're just logging the data
+      console.log('Lead submitted successfully');
     } catch (error) {
       console.error('Error storing lead:', error);
       toast("There was an error saving your data.", {
