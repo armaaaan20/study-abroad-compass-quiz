@@ -5,11 +5,12 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between mb-4 sm:mb-8 bg-gradient-to-r from-[#174a58] to-[#3b8183] p-3 sm:p-4 rounded-lg shadow-md">
       <div className="flex items-center">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center mr-2 sm:mr-3 animate-pulse overflow-hidden">
+        {/* Logo inside circular container */}
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden mr-2 sm:mr-3 bg-white flex items-center justify-center">
           <img
-            src="/edu.png"  // Replace with actual path
+            src="/edu.png" // Replace with your image path
             alt="EduSync Logo"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
         </div>
         <h2 className="text-white text-lg sm:text-xl font-semibold">EduSync</h2>
@@ -25,3 +26,4 @@ const Header = () => {
 };
 
 export default Header;
+
