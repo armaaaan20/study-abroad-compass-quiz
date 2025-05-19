@@ -7,7 +7,7 @@ const Header = () => {
       <div className="flex items-center">
         <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center mr-2 sm:mr-3 animate-pulse overflow-hidden">
           <img
-            src="/path-to-your-logo.png"  // Replace with actual path
+            src="/edu.png"  // Replace with actual path
             alt="EduSync Logo"
             className="w-full h-full object-contain"
           />
