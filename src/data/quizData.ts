@@ -4,11 +4,11 @@ import { CountryInfo, QuizQuestion } from "../types/quiz";
 export const quizQuestions: QuizQuestion[] = [
   {
     id: "budget",
-    question: "What is your estimated study budget per year (in USD)?",
+    question: "What is your estimated study budget per year (in INR)?",
     options: [
       {
-        id: "below-10k",
-        text: "Below $10,000",
+        id: "below-8-lakh",
+        text: "Below ₹8 lakh",
         scores: {
           canada: 0,
           uk: 0,
@@ -19,8 +19,8 @@ export const quizQuestions: QuizQuestion[] = [
         }
       },
       {
-        id: "10k-20k",
-        text: "$10,000–$20,000",
+        id: "8-16-lakh",
+        text: "₹8 lakh–₹16 lakh",
         scores: {
           canada: 2,
           uk: 1,
@@ -31,8 +31,8 @@ export const quizQuestions: QuizQuestion[] = [
         }
       },
       {
-        id: "20k-30k",
-        text: "$20,000–$30,000",
+        id: "16-25-lakh",
+        text: "₹16 lakh–₹25 lakh",
         scores: {
           canada: 1,
           uk: 2,
@@ -43,8 +43,8 @@ export const quizQuestions: QuizQuestion[] = [
         }
       },
       {
-        id: "over-30k",
-        text: "Over $30,000",
+        id: "over-25-lakh",
+        text: "Over ₹25 lakh",
         scores: {
           canada: 0,
           uk: 1,
@@ -263,12 +263,12 @@ export const countriesInfo: Record<string, CountryInfo> = {
     flag: "🇨🇦",
     color: "quiz-red",
     features: {
-      budget: "Affordable tuition with great work opportunities",
+      budget: "Affordable tuition (₹8-16 lakh per year) with great work opportunities for Indian students",
       climate: "Four distinct seasons with beautiful natural landscapes",
-      language: "English and French are official languages",
-      field: "World-class universities excelling in STEM and healthcare",
-      work: "Up to 20 hours per week during studies",
-      residency: "Strong pathway to permanent residency through Post-Graduation Work Permit"
+      language: "English-speaking environment, welcoming to Indian students",
+      field: "World-class universities excelling in STEM and healthcare, popular among Indian students",
+      work: "Up to 20 hours per week during studies, good for Indian students seeking financial support",
+      residency: "Strong pathway to permanent residency through Post-Graduation Work Permit, favored by many Indians"
     }
   },
   uk: {
@@ -277,12 +277,12 @@ export const countriesInfo: Record<string, CountryInfo> = {
     flag: "🇬🇧",
     color: "quiz-blue",
     features: {
-      budget: "Higher tuition but shorter duration programs",
+      budget: "Higher tuition (₹15-25 lakh per year) but shorter duration programs and special scholarships for Indian students",
       climate: "Mild and moderate climate year-round",
-      language: "English-speaking environment",
-      field: "Prestigious universities with excellent business and arts programs",
-      work: "Up to 20 hours per week during term time",
-      residency: "Limited permanent residency pathways"
+      language: "English-speaking environment with large Indian diaspora community",
+      field: "Prestigious universities with excellent business and arts programs with strong recognition in India",
+      work: "Up to 20 hours per week during term time, good for supporting studies",
+      residency: "Graduate Immigration Route offers 2-year stay back opportunity after studies"
     }
   },
   germany: {
@@ -291,12 +291,12 @@ export const countriesInfo: Record<string, CountryInfo> = {
     flag: "🇩🇪",
     color: "quiz-amber",
     features: {
-      budget: "Low or no tuition fees at public universities",
+      budget: "Low or no tuition fees (₹2-7 lakh per year) at public universities, attractive for budget-conscious Indian students",
       climate: "Cold winters and mild summers",
-      language: "Many programs require German proficiency",
-      field: "Strong engineering and technical education",
-      work: "Up to 120 full days or 240 half days per year",
-      residency: "Possible pathway to residency after graduation"
+      language: "Many programs require German proficiency, though English programs are increasing",
+      field: "Strong engineering and technical education valued by Indian employers",
+      work: "Up to 120 full days or 240 half days per year, sufficient for part-time work",
+      residency: "Possible pathway to residency after graduation with 18-month job-seeking visa"
     }
   },
   australia: {
@@ -305,12 +305,12 @@ export const countriesInfo: Record<string, CountryInfo> = {
     flag: "🇦🇺",
     color: "quiz-teal",
     features: {
-      budget: "Higher cost but excellent employment opportunities",
-      climate: "Warm and sunny year-round in most areas",
-      language: "English-speaking environment",
-      field: "High-quality education across all fields",
-      work: "Up to 40 hours per fortnight during term",
-      residency: "Potential pathways to permanent residency"
+      budget: "Higher cost (₹15-25 lakh per year) but excellent employment opportunities for Indian graduates",
+      climate: "Warm and sunny year-round in most areas, similar to parts of India",
+      language: "English-speaking environment with large Indian community",
+      field: "High-quality education across all fields with strong recognition in India",
+      work: "Up to 40 hours per fortnight during term, good for financial support",
+      residency: "Post-Study Work visa options ranging from 2-4 years for Indian graduates"
     }
   },
   usa: {
@@ -319,12 +319,12 @@ export const countriesInfo: Record<string, CountryInfo> = {
     flag: "🇺🇸",
     color: "quiz-blue",
     features: {
-      budget: "Higher tuition costs especially at top universities",
+      budget: "Higher tuition costs (₹20-45 lakh per year) especially at top universities",
       climate: "Diverse climate zones across the country",
-      language: "English-speaking environment",
-      field: "World-renowned universities for STEM and business",
-      work: "Limited on-campus work options",
-      residency: "Challenging but possible pathway to residency"
+      language: "English-speaking environment with vibrant Indian community",
+      field: "World-renowned universities for STEM and business, highly valued by Indian employers",
+      work: "Limited on-campus work options during studies",
+      residency: "OPT offers 1-3 years of post-study work opportunity, with H-1B visa possibilities"
     }
   },
   ireland: {
@@ -333,12 +333,12 @@ export const countriesInfo: Record<string, CountryInfo> = {
     flag: "🇮🇪",
     color: "quiz-emerald",
     features: {
-      budget: "Moderate tuition fees with scholarships available",
+      budget: "Moderate tuition fees (₹10-18 lakh per year) with scholarships available for Indian students",
       climate: "Mild, temperate climate with frequent rainfall",
-      language: "English-speaking environment",
-      field: "Strong in arts, humanities and technology",
-      work: "Up to 20 hours per week during term time",
-      residency: "Two-year stay back option after graduation"
+      language: "English-speaking environment with growing Indian community",
+      field: "Strong in technology, pharmaceuticals, and business, sectors valuable for Indian career growth",
+      work: "Up to 20 hours per week during term time, good for supporting studies",
+      residency: "Two-year stay back option after graduation, attractive to Indian students"
     }
   }
 };

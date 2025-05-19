@@ -19,6 +19,7 @@ const initialState: QuizState = {
     ireland: 0
   },
   result: null,
+  topThreeCountries: [],
   showResults: false,
   formData: { name: '', email: '', whatsapp: '' },
   formSubmitted: false
@@ -26,6 +27,7 @@ const initialState: QuizState = {
 
 const QuizContainer: React.FC = () => {
   const [state, setState] = useState<QuizState>({...initialState});
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleSelectOption = (questionId: string, optionId: string) => {
     const currentQuestion = quizQuestions[state.currentQuestionIndex];
@@ -43,6 +45,7 @@ const QuizContainer: React.FC = () => {
     }));
     
     // Wait a bit before moving to the next question (for better UX)
+    setIsAnimating(true);
     setTimeout(() => {
       // Update scores
       const newScores = { ...state.scores };
@@ -59,24 +62,30 @@ const QuizContainer: React.FC = () => {
           currentQuestionIndex: prevState.currentQuestionIndex + 1
         }));
       } else {
-        // Calculate result
-        let maxScore = 0;
-        let result: Country = 'canada'; // Default
-        
-        Object.entries(newScores).forEach(([country, score]) => {
-          if (score > maxScore) {
-            maxScore = score;
-            result = country as Country;
-          }
-        });
+        // Calculate result and top three countries
+        const sortedCountries = Object.entries(newScores)
+          .map(([country, score]) => ({ country: country as Country, score }))
+          .sort((a, b) => {
+            // Primary sort by score
+            if (b.score !== a.score) {
+              return b.score - a.score;
+            }
+            // Secondary sort for tie-breaking - alphabetical
+            return a.country.localeCompare(b.country);
+          });
+
+        const result = sortedCountries[0].country;
+        const topThree = sortedCountries.slice(0, 3).map(item => item.country);
         
         setState(prevState => ({
           ...prevState,
           scores: newScores,
           result,
+          topThreeCountries: topThree,
           showResults: true
         }));
       }
+      setIsAnimating(false);
     }, 400);
   };
 
@@ -88,12 +97,23 @@ const QuizContainer: React.FC = () => {
     }));
     
     // Show success message
-    toast("Thank you!", {
+    toast("Thank you for your submission!", {
       description: "We'll contact you soon with free study abroad guidance.",
     });
     
-    // In a real app, you would submit this data to a server
-    console.log('Lead submitted:', { name, email, whatsapp, country: state.result });
+    // Store data - This is where you would connect to Supabase in the future
+    const dataToStore = {
+      name,
+      email,
+      whatsapp,
+      primaryCountry: state.result,
+      allRecommendedCountries: state.topThreeCountries,
+      scores: state.scores,
+      answers: state.answers,
+      timestamp: new Date().toISOString()
+    };
+    
+    console.log('Lead submitted:', dataToStore);
   };
 
   const resetQuiz = () => {
@@ -107,13 +127,13 @@ const QuizContainer: React.FC = () => {
   return (
     <div className="w-full max-w-2xl mx-auto">
       {!state.showResults ? (
-        <div className="bg-white rounded-lg shadow-lg border border-gray-100 p-6">
+        <div className={`bg-white rounded-lg shadow-lg border border-gray-100 p-6 ${isAnimating ? 'opacity-70' : 'opacity-100'} transition-opacity duration-300`}>
           <ProgressBar 
             currentQuestion={state.currentQuestionIndex} 
             totalQuestions={quizQuestions.length} 
           />
           
-          <div className="my-8">
+          <div className="my-8 animate-fade-in">
             <QuizQuestion 
               question={currentQuestion}
               selectedOptionId={selectedOptionId}
@@ -131,7 +151,7 @@ const QuizContainer: React.FC = () => {
             </button>
             
             <button
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-2 bg-[#174a58] text-white rounded-md hover:bg-[#3b8183] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => handleSelectOption(currentQuestion.id, selectedOptionId || '')}
               disabled={!selectedOptionId}
             >
@@ -144,6 +164,8 @@ const QuizContainer: React.FC = () => {
           {state.result && (
             <QuizResults
               resultCountry={state.result}
+              recommendedCountries={state.topThreeCountries}
+              scores={state.scores}
               answers={state.answers}
               onReset={resetQuiz}
               onFormSubmit={handleLeadFormSubmit}

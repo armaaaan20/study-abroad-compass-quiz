@@ -1,11 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Country, CountryInfo } from '../types/quiz';
 import { countriesInfo } from '../data/quizData';
 import LeadCaptureForm from './LeadCaptureForm';
 
 interface QuizResultsProps {
   resultCountry: Country;
+  recommendedCountries: Country[];
+  scores: Record<Country, number>;
   answers: Record<string, string>;
   onReset: () => void;
   onFormSubmit: (name: string, email: string, whatsapp: string) => void;
@@ -14,14 +16,17 @@ interface QuizResultsProps {
 
 const QuizResults: React.FC<QuizResultsProps> = ({ 
   resultCountry, 
+  recommendedCountries,
+  scores,
   answers, 
   onReset,
   onFormSubmit,
   formSubmitted
 }) => {
-  const countryInfo: CountryInfo = countriesInfo[resultCountry];
+  const [activeTab, setActiveTab] = useState<Country>(resultCountry);
   
-  const getMatchReasons = () => {
+  const getMatchReasons = (country: Country) => {
+    const countryInfo = countriesInfo[country];
     const reasons = [];
     if (answers.budget) reasons.push(countryInfo.features.budget);
     if (answers.climate) reasons.push(countryInfo.features.climate);
@@ -34,7 +39,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
   };
 
   const shareResult = () => {
-    const text = `I should study in ${countryInfo.name} ${countryInfo.flag} according to this quiz! Find out where you should study: `;
+    const text = `I should study in ${countriesInfo[resultCountry].name} ${countriesInfo[resultCountry].flag} according to this quiz! Find out where you should study: `;
     const url = window.location.href;
     
     // Share via WhatsApp
@@ -46,29 +51,56 @@ const QuizResults: React.FC<QuizResultsProps> = ({
   };
 
   const shareViaEmail = () => {
-    const subject = `I should study in ${countryInfo.name}!`;
-    const body = `According to this quiz, I should study in ${countryInfo.name} ${countryInfo.flag}!\n\nTake the quiz and find out where you should study: ${window.location.href}`;
+    const subject = `I should study in ${countriesInfo[resultCountry].name}!`;
+    const body = `According to this quiz, I should study in ${countriesInfo[resultCountry].name} ${countriesInfo[resultCountry].flag}!\n\nTake the quiz and find out where you should study: ${window.location.href}`;
     
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
+
+  // Calculate max score for percentage
+  const totalMaxScore = Object.values(scores).reduce((max, score) => Math.max(max, score), 0);
 
   return (
     <div className="animate-fade-in">
       <div className="p-6 bg-white rounded-lg shadow-lg border border-gray-100 mb-6">
         <div className="text-center mb-6">
-          <div className="text-7xl mb-2">{countryInfo.flag}</div>
-          <h2 className="text-3xl font-bold font-poppins text-gray-800 mb-2">
-            You should study in {countryInfo.name}!
+          <div className="text-7xl mb-2 animate-scale-in">{countriesInfo[resultCountry].flag}</div>
+          <h2 className="text-3xl font-bold font-poppins text-[#174a58] mb-2">
+            You should study in {countriesInfo[resultCountry].name}!
           </h2>
-          <p className="text-gray-500">Based on your answers, this is your best match!</p>
+          <p className="text-gray-500">Based on your answers, these are your best matches:</p>
+        </div>
+
+        {/* Country Tabs */}
+        <div className="flex border-b border-gray-200 mb-4">
+          {recommendedCountries.map((country) => (
+            <button
+              key={country}
+              className={`py-2 px-4 font-medium border-b-2 transition-all duration-300 ${
+                activeTab === country
+                  ? 'border-[#3b8183] text-[#174a58]'
+                  : 'border-transparent text-gray-500 hover:text-[#174a58] hover:border-gray-300'
+              }`}
+              onClick={() => setActiveTab(country)}
+            >
+              <span className="mr-2">{countriesInfo[country].flag}</span>
+              {countriesInfo[country].name}
+              <span className="ml-2 text-xs font-normal">
+                ({Math.round((scores[country] / totalMaxScore) * 100)}%)
+              </span>
+            </button>
+          ))}
         </div>
         
-        <div className="mb-6">
-          <h3 className="text-xl font-semibold font-poppins mb-3 text-gray-700">Why {countryInfo.name} is great for you:</h3>
+        {/* Active Country Details */}
+        <div className="mb-6 animate-fade-in">
+          <h3 className="text-xl font-semibold font-poppins mb-3 text-gray-700">
+            Why {countriesInfo[activeTab].name} is great for you:
+          </h3>
           <ul className="space-y-2">
-            {getMatchReasons().map((reason, index) => (
+            {getMatchReasons(activeTab).map((reason, index) => (
               <li key={index} className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-[#3b8183] mr-2">✓</span>
                 <span>{reason}</span>
               </li>
             ))}
@@ -78,8 +110,8 @@ const QuizResults: React.FC<QuizResultsProps> = ({
         {!formSubmitted ? (
           <LeadCaptureForm onSubmit={onFormSubmit} />
         ) : (
-          <div className="bg-green-50 border border-green-200 rounded-md p-4 text-center mb-6">
-            <p className="text-green-700 font-medium">Thanks! We'll be in touch with guidance about studying in {countryInfo.name}!</p>
+          <div className="bg-green-50 border border-green-200 rounded-md p-4 text-center mb-6 animate-fade-in">
+            <p className="text-green-700 font-medium">Thanks! We'll be in touch with guidance about studying in {countriesInfo[resultCountry].name}!</p>
           </div>
         )}
         
@@ -89,7 +121,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
             <div className="flex justify-center space-x-4">
               <button 
                 onClick={shareResult} 
-                className="p-3 bg-green-500 rounded-full text-white hover:bg-green-600 transition"
+                className="p-3 bg-green-500 rounded-full text-white hover:bg-green-600 transition transform hover:scale-110"
                 title="Share via WhatsApp"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +130,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
               </button>
               <button 
                 onClick={shareViaEmail} 
-                className="p-3 bg-blue-500 rounded-full text-white hover:bg-blue-600 transition"
+                className="p-3 bg-[#174a58] rounded-full text-white hover:bg-[#3b8183] transition transform hover:scale-110"
                 title="Share via Email"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +142,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
           
           <button 
             onClick={onReset} 
-            className="mt-6 px-5 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition font-medium"
+            className="mt-6 px-5 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition font-medium transform hover:scale-105"
           >
             Start Over
           </button>

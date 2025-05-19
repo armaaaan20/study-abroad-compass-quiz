@@ -32,6 +32,7 @@ export interface QuizState {
   answers: Record<string, string>;
   scores: Record<Country, number>;
   result: Country | null;
+  topThreeCountries: Country[];
   showResults: boolean;
   formData: FormData;
   formSubmitted: boolean;
