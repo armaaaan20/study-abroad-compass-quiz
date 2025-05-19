@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
-  base: "./",
+  base: "/",  // Changed from "./" to "/" for GitHub Pages
   server: {
     host: "::",
     port: 8080
