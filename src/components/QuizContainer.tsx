@@ -73,9 +73,9 @@ const QuizContainer: React.FC = () => {
             
             // Secondary sort based on specific criteria
             // For example, for similar scores, prefer countries with better work opportunities
-            const aWorkOpportunity = state.answers['work'] === 'work_important' && country === 'canada' ? 2 : 
+            const aWorkOpportunity = state.answers['work'] === 'work_important' && a.country === 'canada' ? 2 : 
                                      state.answers['work'] === 'work_important' ? 1 : 0;
-            const bWorkOpportunity = state.answers['work'] === 'work_important' && country === 'canada' ? 2 : 
+            const bWorkOpportunity = state.answers['work'] === 'work_important' && b.country === 'canada' ? 2 : 
                                      state.answers['work'] === 'work_important' ? 1 : 0;
             
             if (aWorkOpportunity !== bWorkOpportunity) {
