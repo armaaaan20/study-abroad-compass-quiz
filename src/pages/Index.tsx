@@ -1,16 +1,13 @@
-
 import React from 'react';
 import QuizContainer from '@/components/QuizContainer';
 import Header from '@/components/Header';
-
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-[#174a58]/5 to-[#3b8183]/10 py-8 px-4 sm:px-6">
+  return <div className="min-h-screen bg-gradient-to-b from-[#174a58]/5 to-[#3b8183]/10 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <Header />
         
         <header className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold font-poppins text-gray-800 mb-4 tracking-tight">
+          <h1 className="text-4xl font-poppins text-gray-800 mb-4 tracking-tight font-extrabold md:text-3xl py-0">
             Which Country Should You <span className="text-[#174a58]">Study In</span>?
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -24,8 +21,6 @@ const Index = () => {
           <p>© 2025 EduSync Study Abroad Guide. All rights reserved.</p>
         </footer>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
