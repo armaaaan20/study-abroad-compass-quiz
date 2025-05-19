@@ -70,7 +70,19 @@ const QuizContainer: React.FC = () => {
             if (b.score !== a.score) {
               return b.score - a.score;
             }
-            // Secondary sort for tie-breaking - alphabetical
+            
+            // Secondary sort based on specific criteria
+            // For example, for similar scores, prefer countries with better work opportunities
+            const aWorkOpportunity = state.answers['work'] === 'work_important' && country === 'canada' ? 2 : 
+                                     state.answers['work'] === 'work_important' ? 1 : 0;
+            const bWorkOpportunity = state.answers['work'] === 'work_important' && country === 'canada' ? 2 : 
+                                     state.answers['work'] === 'work_important' ? 1 : 0;
+            
+            if (aWorkOpportunity !== bWorkOpportunity) {
+              return bWorkOpportunity - aWorkOpportunity;
+            }
+            
+            // Tertiary sort - alphabetical
             return a.country.localeCompare(b.country);
           });
 
@@ -89,7 +101,7 @@ const QuizContainer: React.FC = () => {
     }, 400);
   };
 
-  const handleLeadFormSubmit = (name: string, email: string, whatsapp: string) => {
+  const handleLeadFormSubmit = async (name: string, email: string, whatsapp: string) => {
     setState(prevState => ({
       ...prevState,
       formData: { name, email, whatsapp },
@@ -101,19 +113,39 @@ const QuizContainer: React.FC = () => {
       description: "We'll contact you soon with free study abroad guidance.",
     });
     
-    // Store data - This is where you would connect to Supabase in the future
+    // Store data to be sent to Supabase
     const dataToStore = {
       name,
       email,
       whatsapp,
       primaryCountry: state.result,
-      allRecommendedCountries: state.topThreeCountries,
+      recommendedCountries: state.topThreeCountries,
       scores: state.scores,
       answers: state.answers,
       timestamp: new Date().toISOString()
     };
     
+    // Log data (will be replaced with Supabase integration)
     console.log('Lead submitted:', dataToStore);
+    
+    // This is where you would add the Supabase integration
+    // Once Supabase is connected using the Lovable Supabase integration
+    try {
+      /* 
+      const { error } = await supabase
+        .from('study_abroad_leads')
+        .insert([dataToStore]);
+        
+      if (error) throw error;
+      */
+      
+      // For now, we're just logging the data
+    } catch (error) {
+      console.error('Error storing lead:', error);
+      toast("There was an error saving your data.", {
+        description: "Please try again or contact support.",
+      });
+    }
   };
 
   const resetQuiz = () => {

@@ -12,7 +12,7 @@ const QuizOption: React.FC<QuizOptionProps> = ({ option, selected, onSelect }) =
   return (
     <button
       onClick={() => onSelect(option.id)}
-      className={`w-full text-left p-4 mb-3 rounded-lg border-2 transition-all duration-300 transform hover:scale-[1.02] ${
+      className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-300 transform hover:scale-[1.02] min-h-[72px] flex items-center ${
         selected 
           ? 'border-[#3b8183] bg-[#3b8183]/10 shadow-md' 
           : 'border-gray-200 hover:border-[#174a58]/30 hover:bg-gray-50'

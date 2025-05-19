@@ -16,8 +16,8 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
 }) => {
   return (
     <div className="animate-fade-in">
-      <h2 className="text-2xl font-semibold font-poppins mb-6 text-gray-800">{question.question}</h2>
-      <div className="space-y-2">
+      <h2 className="text-2xl font-semibold font-poppins mb-8 text-gray-800">{question.question}</h2>
+      <div className="grid grid-cols-1 gap-4">
         {question.options.map(option => (
           <QuizOption 
             key={option.id} 

@@ -33,7 +33,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit }) => {
     if (!whatsapp.trim()) {
       newErrors.whatsapp = 'WhatsApp number is required';
     } else if (!validateIndianPhoneNumber(whatsapp)) {
-      newErrors.whatsapp = 'Please enter a valid Indian phone number';
+      newErrors.whatsapp = 'Please enter a valid Indian phone number (+91 or 10 digits starting with 6-9)';
     }
     
     setErrors(newErrors);
@@ -89,15 +89,21 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit }) => {
           <label htmlFor="whatsapp" className="block mb-1 text-sm font-medium text-gray-700">
             WhatsApp Number* (Indian format)
           </label>
-          <input
-            type="text"
-            id="whatsapp"
-            value={whatsapp}
-            onChange={(e) => setWhatsapp(e.target.value)}
-            className={`w-full px-3 py-2 border rounded-md ${errors.whatsapp ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#3b8183]`}
-            placeholder="+91 or 10-digit number"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              id="whatsapp"
+              value={whatsapp}
+              onChange={(e) => setWhatsapp(e.target.value)}
+              className={`w-full px-3 py-2 border rounded-md pl-12 ${errors.whatsapp ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#3b8183]`}
+              placeholder="10-digit number"
+            />
+            <div className="absolute inset-y-0 left-0 flex items-center px-3 pointer-events-none text-gray-500 border-r border-gray-300">
+              +91
+            </div>
+          </div>
           {errors.whatsapp && <p className="mt-1 text-xs text-red-500">{errors.whatsapp}</p>}
+          <p className="mt-1 text-xs text-gray-500">Example: 9876543210 or +919876543210</p>
         </div>
         
         <button
