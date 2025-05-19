@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between mb-4 sm:mb-8 bg-gradient-to-r from-[#174a58] to-[#3b8183] p-3 sm:p-4 rounded-lg shadow-md">
       <div className="flex items-center">
-        {/* Logo image without circular shape */}
+        {/* Clean logo image without background or container */}
         <img
           src="/edu.png" // Replace with your image path
           alt="EduSync Logo"
