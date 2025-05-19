@@ -19,7 +19,7 @@ const QuizContainer: React.FC = () => {
   const selectedOptionId = currentQuestion ? state.answers[currentQuestion.id] : null;
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto px-3 sm:px-0">
       {!state.showResults ? (
         <QuizInProgress
           currentQuestionIndex={state.currentQuestionIndex}

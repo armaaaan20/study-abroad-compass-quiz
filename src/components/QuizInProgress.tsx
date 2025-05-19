@@ -24,13 +24,13 @@ const QuizInProgress: React.FC<QuizInProgressProps> = ({
   onPreviousClick
 }) => {
   return (
-    <div className={`bg-white rounded-lg shadow-lg border border-gray-100 p-6 ${isAnimating ? 'opacity-70' : 'opacity-100'} transition-opacity duration-300`}>
+    <div className={`bg-white rounded-lg shadow-lg border border-gray-100 p-4 sm:p-6 ${isAnimating ? 'opacity-70' : 'opacity-100'} transition-opacity duration-300`}>
       <ProgressBar 
         currentQuestion={currentQuestionIndex} 
         totalQuestions={totalQuestions} 
       />
       
-      <div className="my-8 animate-fade-in">
+      <div className="my-6 sm:my-8 animate-fade-in">
         <QuizQuestion 
           question={currentQuestion}
           selectedOptionId={selectedOptionId}
@@ -40,7 +40,7 @@ const QuizInProgress: React.FC<QuizInProgressProps> = ({
       
       <div className="flex justify-between items-center">
         <button
-          className={`px-4 py-2 rounded text-gray-600 hover:bg-gray-100 ${currentQuestionIndex === 0 ? 'invisible' : ''}`}
+          className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded text-gray-600 hover:bg-gray-100 ${currentQuestionIndex === 0 ? 'invisible' : ''}`}
           onClick={onPreviousClick}
           disabled={currentQuestionIndex === 0}
         >
@@ -48,7 +48,7 @@ const QuizInProgress: React.FC<QuizInProgressProps> = ({
         </button>
         
         <button
-          className="px-6 py-2 bg-[#174a58] text-white rounded-md hover:bg-[#3b8183] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-1.5 sm:px-6 sm:py-2 bg-[#174a58] text-white rounded-md hover:bg-[#3b8183] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => onSelectOption(currentQuestion.id, selectedOptionId || '')}
           disabled={!selectedOptionId}
         >
