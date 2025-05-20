@@ -63,6 +63,7 @@ export type Database = {
       student_leads: {
         Row: {
           answers: Json | null
+          best_country: string | null
           created_at: string
           email: string
           id: string
@@ -75,6 +76,7 @@ export type Database = {
         }
         Insert: {
           answers?: Json | null
+          best_country?: string | null
           created_at?: string
           email: string
           id?: string
@@ -87,6 +89,7 @@ export type Database = {
         }
         Update: {
           answers?: Json | null
+          best_country?: string | null
           created_at?: string
           email?: string
           id?: string

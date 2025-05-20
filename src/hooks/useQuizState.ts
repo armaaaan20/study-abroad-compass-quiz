@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Country, QuizState } from '../types/quiz';
 import { quizQuestions } from '../data/quizData';
@@ -174,15 +173,12 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
       duration: 5000,
     });
     
-    // Store data to be sent to Supabase
+    // Store only essential data to Supabase
     const dataToStore = {
       name,
       email,
       whatsapp,
-      quiz_result: state.result,
-      recommended_countries: state.topThreeCountries,
-      scores: state.scores,
-      answers: state.answers,
+      best_country: state.result, // Store only the best country
       form_location: 'post-quiz'
     };
     

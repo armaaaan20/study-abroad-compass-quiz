@@ -13,7 +13,13 @@ const Index = () => {
     try {
       const { error } = await supabase
         .from('student_leads')
-        .insert([{ name, email, whatsapp, form_location: 'pre-quiz' }]);
+        .insert([{ 
+          name, 
+          email, 
+          whatsapp, 
+          form_location: 'pre-quiz',
+          best_country: null // No quiz result yet
+        }]);
         
       if (error) throw error;
       
