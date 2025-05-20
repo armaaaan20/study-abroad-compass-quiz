@@ -13,6 +13,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ skipLeadCapture = false }
   const { 
     state, 
     isAnimating, 
+    isSubmitting,
     handleSelectOption, 
     handleLeadFormSubmit, 
     resetQuiz,

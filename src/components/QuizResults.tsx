@@ -106,7 +106,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
           <div className="text-5xl sm:text-7xl mb-2 animate-bounce-gentle">
             {countriesInfo[resultCountry].flag}
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-[#174a58] mb-2 animate-reveal-text">
+          <h2 className="text-2xl sm:text-3xl font-bold font-poppins bg-gradient-to-r from-[#174a58] to-[#3b8183] bg-clip-text text-transparent mb-2 animate-reveal-text">
             You should study in {countriesInfo[resultCountry].name}!
           </h2>
           <p className="text-gray-500">Based on your answers, these are your best matches:</p>

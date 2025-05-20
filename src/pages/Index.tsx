@@ -8,9 +8,11 @@ import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleLeadFormSubmit = async (name: string, email: string, whatsapp: string) => {
     try {
+      setIsSubmitting(true);
       const { error } = await supabase
         .from('student_leads')
         .insert([{ 
@@ -34,6 +36,8 @@ const Index = () => {
       });
       // Allow them to continue with the quiz even if the lead capture fails
       setLeadSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -44,10 +48,9 @@ const Index = () => {
         
         <header className="text-center mb-6 sm:mb-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-poppins text-gray-800 mb-3 sm:mb-4 tracking-tight font-extrabold py-2 relative inline-block">
-            Which Country Should You 
-            <span className="relative z-10">
-              <span className="text-[#174a58] relative z-10"> Study In</span>
-            </span>?
+            <span className="bg-gradient-to-r from-[#174a58] to-[#3b8183] bg-clip-text text-transparent">
+              Which Country Should You Study In?
+            </span>
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-2">
             Take this quick quiz to discover your perfect study abroad destination based on your preferences, budget, and career goals.
@@ -57,7 +60,7 @@ const Index = () => {
         {!leadSubmitted ? (
           <div className="max-w-xl mx-auto mb-8 animate-fade-in">
             <div className="bg-white rounded-lg shadow-lg border border-gray-100 p-5 mb-6">
-              <LeadCaptureForm onSubmit={handleLeadFormSubmit} isPreQuiz={true} />
+              <LeadCaptureForm onSubmit={handleLeadFormSubmit} isPreQuiz={true} isSubmitting={isSubmitting} />
             </div>
           </div>
         ) : (

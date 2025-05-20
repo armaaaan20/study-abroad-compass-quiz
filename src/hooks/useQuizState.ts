@@ -29,6 +29,7 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
     formSubmitted: skipLeadCapture
   });
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSelectOption = (questionId: string, optionId: string) => {
     const currentQuestion = quizQuestions[state.currentQuestionIndex];
@@ -161,27 +162,29 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
   };
 
   const handleLeadFormSubmit = async (name: string, email: string, whatsapp: string) => {
-    setState(prevState => ({
-      ...prevState,
-      formData: { name, email, whatsapp },
-      formSubmitted: true
-    }));
-    
-    // Show success message with animation
-    toast("Thank you for your submission!", {
-      description: "We'll contact you soon with free study abroad guidance.",
-      duration: 5000,
-    });
-    
-    // Store only essential data to Supabase
-    const dataToStore = {
-      name,
-      email,
-      whatsapp,
-      best_country: state.result // Store only the best country
-    };
-    
     try {
+      setIsSubmitting(true);
+      
+      setState(prevState => ({
+        ...prevState,
+        formData: { name, email, whatsapp },
+        formSubmitted: true
+      }));
+      
+      // Show success message with animation
+      toast("Thank you for your submission!", {
+        description: "We'll contact you soon with free study abroad guidance.",
+        duration: 5000,
+      });
+      
+      // Store only essential data to Supabase
+      const dataToStore = {
+        name,
+        email,
+        whatsapp,
+        best_country: state.result // Store only the best country
+      };
+      
       const { error } = await supabase
         .from('student_leads')
         .insert([dataToStore]);
@@ -194,6 +197,8 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
       toast("There was an error saving your data.", {
         description: "Please try again or contact support.",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -215,6 +220,7 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
   return {
     state,
     isAnimating,
+    isSubmitting,
     handleSelectOption,
     handleLeadFormSubmit,
     resetQuiz,

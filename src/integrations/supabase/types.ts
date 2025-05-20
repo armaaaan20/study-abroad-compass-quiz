@@ -62,41 +62,29 @@ export type Database = {
       }
       student_leads: {
         Row: {
-          answers: Json | null
           best_country: string | null
           created_at: string
           email: string
           id: string
           name: string
-          quiz_result: string | null
-          recommended_countries: Json | null
-          scores: Json | null
           student_id: string
           whatsapp: string
         }
         Insert: {
-          answers?: Json | null
           best_country?: string | null
           created_at?: string
           email: string
           id?: string
           name: string
-          quiz_result?: string | null
-          recommended_countries?: Json | null
-          scores?: Json | null
           student_id?: string
           whatsapp: string
         }
         Update: {
-          answers?: Json | null
           best_country?: string | null
           created_at?: string
           email?: string
           id?: string
           name?: string
-          quiz_result?: string | null
-          recommended_countries?: Json | null
-          scores?: Json | null
           student_id?: string
           whatsapp?: string
         }

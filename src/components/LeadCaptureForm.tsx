@@ -1,18 +1,23 @@
 
 import React, { useState } from 'react';
 import { Input } from './ui/input';
+import { GraduationCap, Loader2 } from 'lucide-react';
 
 interface LeadCaptureFormProps {
   onSubmit: (name: string, email: string, whatsapp: string) => void;
   isPreQuiz?: boolean;
+  isSubmitting?: boolean;
 }
 
-const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit, isPreQuiz = false }) => {
+const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ 
+  onSubmit, 
+  isPreQuiz = false,
+  isSubmitting = false 
+}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateIndianPhoneNumber = (number: string) => {
     // Indian phone number format: 10 digits, optionally starting with +91 or 0
@@ -46,18 +51,24 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit, isPreQuiz =
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (validate()) {
-      setIsSubmitting(true);
+    if (validate() && !isSubmitting) {
       await onSubmit(name, email, whatsapp);
-      setIsSubmitting(false);
     }
   };
 
   return (
     <div className={`${isPreQuiz ? '' : 'bg-[#174a58]/5 border border-[#174a58]/20 rounded-lg p-5'} mb-6 animate-fade-in`}>
-      <h3 className="text-center text-xl font-semibold font-poppins mb-4 text-[#174a58]">
-        Get Free Study Abroad Guidance
-      </h3>
+      <div className="text-center mb-6">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#174a58] to-[#3b8183] text-white mb-4 shadow-md">
+          <GraduationCap size={32} className="animate-pulse-subtle" />
+        </div>
+        <h3 className="text-xl sm:text-2xl font-bold font-poppins mb-2 bg-gradient-to-r from-[#174a58] to-[#3b8183] bg-clip-text text-transparent">
+          Get Free Study Abroad Guidance
+        </h3>
+        <p className="text-sm text-gray-600 max-w-md mx-auto">
+          Share your details to receive personalized advice for your international education journey
+        </p>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="relative">
@@ -117,11 +128,18 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit, isPreQuiz =
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-3.5 bg-[#3b8183] text-white rounded-md hover:bg-[#174a58] transition-all duration-300 font-medium transform hover:scale-[1.01] shadow-md hover:shadow-lg active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#3b8183]/50 relative overflow-hidden group"
+          className="w-full py-3.5 bg-gradient-to-r from-[#174a58] to-[#3b8183] text-white rounded-md hover:from-[#123a45] hover:to-[#2a6163] transition-all duration-300 font-medium transform hover:scale-[1.01] shadow-md hover:shadow-lg active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#3b8183]/50 relative overflow-hidden group"
         >
           <div className="absolute inset-0 w-0 bg-white opacity-20 transition-all duration-300 origin-left group-hover:w-full"></div>
-          <span className="relative z-10 font-medium">
-            {isSubmitting ? 'Processing...' : isPreQuiz ? 'Take the Quiz' : 'Get Expert Guidance'}
+          <span className="relative z-10 font-medium flex items-center justify-center">
+            {isSubmitting ? (
+              <>
+                <Loader2 size={18} className="animate-spin mr-2" />
+                Processing...
+              </>
+            ) : (
+              isPreQuiz ? 'Take the Quiz' : 'Get Expert Guidance'
+            )}
           </span>
         </button>
         
