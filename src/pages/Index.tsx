@@ -17,7 +17,6 @@ const Index = () => {
           name, 
           email, 
           whatsapp, 
-          form_location: 'pre-quiz',
           best_country: null // No quiz result yet
         }]);
         

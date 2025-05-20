@@ -178,8 +178,7 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
       name,
       email,
       whatsapp,
-      best_country: state.result, // Store only the best country
-      form_location: 'post-quiz'
+      best_country: state.result // Store only the best country
     };
     
     try {
