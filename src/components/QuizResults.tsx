@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Country } from '../types/quiz';
 import { countriesInfo } from '../data/quizData';
@@ -122,7 +121,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
             {/* Right shadow gradient for scroll indication */}
             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-10 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
             
-            <ScrollArea orientation="horizontal" className="w-full">
+            <ScrollArea className="w-full">
               <div className="flex space-x-1 pb-2 px-4 min-w-max">
                 {recommendedCountries.map((country, index) => (
                   <button
