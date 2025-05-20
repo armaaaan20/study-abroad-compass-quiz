@@ -52,9 +52,6 @@ const Index = () => {
         {!leadSubmitted ? (
           <div className="max-w-xl mx-auto mb-8 animate-fade-in">
             <div className="bg-white rounded-lg shadow-lg border border-gray-100 p-5 mb-6">
-              <h2 className="text-xl font-semibold text-center mb-4 text-[#174a58]">
-                Sign up to discover your perfect study destination
-              </h2>
               <LeadCaptureForm onSubmit={handleLeadFormSubmit} isPreQuiz={true} />
             </div>
           </div>

@@ -52,7 +52,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit, isPreQuiz =
   return (
     <div className={`${isPreQuiz ? '' : 'bg-[#174a58]/5 border border-[#174a58]/20 rounded-lg p-5'} mb-6 animate-fade-in`}>
       <h3 className="text-center text-xl font-semibold font-poppins mb-4 text-[#174a58]">
-        {isPreQuiz ? 'Sign up for free study abroad guidance' : 'Get Free Study Abroad Guidance'}
+        Get Free Study Abroad Guidance
       </h3>
       
       <form onSubmit={handleSubmit} className="space-y-4">
