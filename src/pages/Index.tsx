@@ -19,7 +19,7 @@ const Index = () => {
           name, 
           email, 
           whatsapp, 
-          best_country: null // No quiz result yet
+          best_country: null // Initially null, will be updated after quiz completion
         }]);
         
       if (error) throw error;

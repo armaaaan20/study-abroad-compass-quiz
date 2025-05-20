@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Country, QuizState } from '../types/quiz';
 import { quizQuestions } from '../data/quizData';
@@ -177,13 +178,15 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
         duration: 5000,
       });
       
-      // Store only essential data to Supabase
+      // Store data to Supabase including the best country result
       const dataToStore = {
         name,
         email,
         whatsapp,
-        best_country: state.result // Store only the best country
+        best_country: state.result // This ensures the best_country is saved
       };
+      
+      console.log("Saving to Supabase:", dataToStore);
       
       const { error } = await supabase
         .from('student_leads')

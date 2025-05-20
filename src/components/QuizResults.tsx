@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Country } from '../types/quiz';
 import { countriesInfo } from '../data/quizData';
@@ -95,6 +96,15 @@ const QuizResults: React.FC<QuizResultsProps> = ({
 
   // Calculate max score for percentage
   const totalMaxScore = Object.values(scores).reduce((max, score) => Math.max(max, score), 0);
+  
+  // Update document title with result
+  useEffect(() => {
+    document.title = `You should study in ${countriesInfo[resultCountry].name}! - Study Abroad Quiz`;
+    
+    return () => {
+      document.title = "Study Abroad Quiz"; // Reset title when component unmounts
+    };
+  }, [resultCountry]);
 
   return (
     <div className="animate-fade-in">
@@ -114,22 +124,16 @@ const QuizResults: React.FC<QuizResultsProps> = ({
 
         {/* Country Tabs - Improved for Mobile */}
         {isMobile ? (
-          <div className="relative mb-6">
-            {/* Left shadow gradient for scroll indication */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-10 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-            
-            {/* Right shadow gradient for scroll indication */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-10 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
-            
-            <ScrollArea className="w-full">
-              <div className="flex space-x-1 pb-2 px-4 min-w-max">
+          <div className="relative mb-6 border border-gray-100 rounded-lg shadow-inner bg-gray-50">
+            <ScrollArea className="w-full py-2">
+              <div className="flex px-2 pb-2 gap-x-2 min-w-max">
                 {recommendedCountries.map((country, index) => (
                   <button
                     key={country}
-                    className={`py-2 px-3 text-sm font-medium flex items-center justify-center border-b-2 rounded-t-md transition-all duration-300 min-w-[100px] ${
+                    className={`py-2 px-3 text-sm font-medium flex items-center justify-center gap-1 rounded-lg transition-all duration-300 ${
                       activeTab === country
-                        ? 'border-[#3b8183] text-[#174a58] bg-[#3b8183]/10 shadow-md transform -translate-y-0.5'
-                        : 'border-transparent text-gray-500 hover:text-[#174a58] hover:bg-gray-50'
+                        ? 'bg-[#3b8183]/20 text-[#174a58] shadow-md border border-[#3b8183]/30'
+                        : 'bg-white border border-gray-100 text-gray-600 hover:text-[#174a58]'
                     }`}
                     onClick={() => handleTabChange(country)}
                     style={{ 
@@ -140,12 +144,12 @@ const QuizResults: React.FC<QuizResultsProps> = ({
                       animationFillMode: 'both'
                     }}
                   >
-                    <span className="mr-1">{countriesInfo[country].flag}</span>
-                    <span className="whitespace-nowrap overflow-hidden text-ellipsis max-w-[60px]">
+                    <span>{countriesInfo[country].flag}</span>
+                    <span className="whitespace-nowrap">
                       {countriesInfo[country].name}
                     </span>
-                    <span className="ml-1 text-xs">
-                      ({Math.round((scores[country] / totalMaxScore) * 100)}%)
+                    <span className="text-xs bg-gray-50 px-1 rounded-full">
+                      {Math.round((scores[country] / totalMaxScore) * 100)}%
                     </span>
                   </button>
                 ))}
@@ -211,7 +215,13 @@ const QuizResults: React.FC<QuizResultsProps> = ({
         </div>
         
         {!formSubmitted ? (
-          <LeadCaptureForm onSubmit={onFormSubmit} />
+          <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg mb-6">
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-bold text-[#174a58] mb-1">Get Free Study Abroad Guidance</h3>
+              <p className="text-sm text-gray-600">We'll help you with admission process for {countriesInfo[resultCountry].name}</p>
+            </div>
+            <LeadCaptureForm onSubmit={onFormSubmit} />
+          </div>
         ) : (
           <div className="bg-green-50 border border-green-200 rounded-md p-4 text-center mb-6 animate-scale-in">
             <div className="inline-block mb-2 animate-bounce-gentle">
