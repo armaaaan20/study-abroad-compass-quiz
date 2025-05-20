@@ -1,60 +1,136 @@
-
 import { CountryInfo, QuizQuestion } from "../types/quiz";
 
 export const quizQuestions: QuizQuestion[] = [
   {
-    id: "budget",
-    question: "What is your estimated study budget per year (in INR)?",
+    id: "study_duration",
+    question: "What is your preferred program duration?",
     options: [
       {
-        id: "below-8-lakh",
-        text: "Below ₹8 lakh",
+        id: "short",
+        text: "Shorter programs (1-2 years)",
         scores: {
           canada: 0,
-          uk: 0,
-          germany: 2,
-          australia: 0,
+          uk: 2,
+          germany: 0,
+          australia: 1,
           usa: 0,
-          ireland: 1,
-          russia: 2
+          ireland: 2,
+          russia: 0
         }
       },
       {
-        id: "8-16-lakh",
-        text: "₹8 lakh–₹16 lakh",
+        id: "medium",
+        text: "Medium-length programs (2-3 years)",
         scores: {
           canada: 2,
           uk: 1,
           germany: 1,
           australia: 2,
-          usa: 0,
+          usa: 1,
+          ireland: 1,
+          russia: 1
+        }
+      },
+      {
+        id: "long",
+        text: "Longer programs (4+ years)",
+        scores: {
+          canada: 1,
+          uk: 0,
+          germany: 2,
+          australia: 0,
+          usa: 2,
+          ireland: 0,
+          russia: 2
+        }
+      }
+    ]
+  },
+  {
+    id: "field",
+    question: "What is your preferred field of study?",
+    options: [
+      {
+        id: "stem",
+        text: "STEM (Engineering, IT, etc.)",
+        scores: {
+          canada: 2,
+          uk: 1,
+          germany: 2,
+          australia: 2,
+          usa: 2,
+          ireland: 1,
+          russia: 1
+        }
+      },
+      {
+        id: "business",
+        text: "Business or Management",
+        scores: {
+          canada: 1,
+          uk: 2,
+          germany: 1,
+          australia: 1,
+          usa: 2,
+          ireland: 1,
+          russia: 0
+        }
+      },
+      {
+        id: "arts",
+        text: "Arts or Humanities",
+        scores: {
+          canada: 1,
+          uk: 2,
+          germany: 1,
+          australia: 1,
+          usa: 1,
+          ireland: 2,
+          russia: 0
+        }
+      },
+      {
+        id: "healthcare",
+        text: "Healthcare/Medical",
+        scores: {
+          canada: 2,
+          uk: 1,
+          germany: 2,
+          australia: 2,
+          usa: 1,
+          ireland: 1,
+          russia: 2
+        }
+      }
+    ]
+  },
+  {
+    id: "language",
+    question: "Are you open to learning a new language for study?",
+    options: [
+      {
+        id: "yes",
+        text: "Yes",
+        scores: {
+          canada: 1,
+          uk: 1,
+          germany: 2,
+          australia: 1,
+          usa: 1,
           ireland: 1,
           russia: 2
         }
       },
       {
-        id: "16-25-lakh",
-        text: "₹16 lakh–₹25 lakh",
+        id: "no",
+        text: "No",
         scores: {
-          canada: 1,
+          canada: 2,
           uk: 2,
           germany: 0,
-          australia: 1,
-          usa: 1,
-          ireland: 2,
-          russia: 1
-        }
-      },
-      {
-        id: "over-25-lakh",
-        text: "Over ₹25 lakh",
-        scores: {
-          canada: 0,
-          uk: 1,
-          germany: 0,
-          australia: 1,
+          australia: 2,
           usa: 2,
-          ireland: 0,
+          ireland: 2,
           russia: 0
         }
       }
@@ -119,91 +195,59 @@ export const quizQuestions: QuizQuestion[] = [
     ]
   },
   {
-    id: "language",
-    question: "Are you open to learning a new language for study?",
+    id: "budget",
+    question: "What is your estimated study budget per year (in INR)?",
     options: [
       {
-        id: "yes",
-        text: "Yes",
+        id: "below-8-lakh",
+        text: "Below ₹8 lakh",
         scores: {
-          canada: 1,
-          uk: 1,
+          canada: 0,
+          uk: 0,
           germany: 2,
-          australia: 1,
-          usa: 1,
+          australia: 0,
+          usa: 0,
           ireland: 1,
           russia: 2
         }
       },
       {
-        id: "no",
-        text: "No",
-        scores: {
-          canada: 2,
-          uk: 2,
-          germany: 0,
-          australia: 2,
-          usa: 2,
-          ireland: 2,
-          russia: 0
-        }
-      }
-    ]
-  },
-  {
-    id: "field",
-    question: "What is your preferred field of study?",
-    options: [
-      {
-        id: "stem",
-        text: "STEM (Engineering, IT, etc.)",
+        id: "8-16-lakh",
+        text: "₹8 lakh–₹16 lakh",
         scores: {
           canada: 2,
           uk: 1,
-          germany: 2,
+          germany: 1,
           australia: 2,
-          usa: 2,
+          usa: 0,
           ireland: 1,
+          russia: 2
+        }
+      },
+      {
+        id: "16-25-lakh",
+        text: "₹16 lakh–₹25 lakh",
+        scores: {
+          canada: 1,
+          uk: 2,
+          germany: 0,
+          australia: 1,
+          usa: 1,
+          ireland: 2,
           russia: 1
         }
       },
       {
-        id: "business",
-        text: "Business or Management",
+        id: "over-25-lakh",
+        text: "Over ₹25 lakh",
         scores: {
-          canada: 1,
-          uk: 2,
-          germany: 1,
+          canada: 0,
+          uk: 1,
+          germany: 0,
           australia: 1,
           usa: 2,
-          ireland: 1,
+          ireland: 0,
           russia: 0
-        }
-      },
-      {
-        id: "arts",
-        text: "Arts or Humanities",
-        scores: {
-          canada: 1,
-          uk: 2,
-          germany: 1,
-          australia: 1,
-          usa: 1,
-          ireland: 2,
-          russia: 0
-        }
-      },
-      {
-        id: "healthcare",
-        text: "Healthcare/Medical",
-        scores: {
-          canada: 2,
-          uk: 1,
-          germany: 2,
-          australia: 2,
-          usa: 1,
-          ireland: 1,
-          russia: 2
         }
       }
     ]
@@ -272,7 +316,6 @@ export const quizQuestions: QuizQuestion[] = [
       }
     ]
   },
-  // New intellectual questions
   {
     id: "research",
     question: "How important is research quality and innovation to you?",
@@ -364,52 +407,53 @@ export const quizQuestions: QuizQuestion[] = [
     ]
   },
   {
-    id: "study_duration",
-    question: "What is your preferred program duration?",
+    id: "campus_life",
+    question: "What type of campus experience are you looking for?",
     options: [
       {
-        id: "short",
-        text: "Shorter programs (1-2 years)",
+        id: "vibrant",
+        text: "Vibrant city life with diverse cultural experiences",
         scores: {
-          canada: 0,
+          canada: 2,
           uk: 2,
-          germany: 0,
-          australia: 1,
-          usa: 0,
-          ireland: 2,
-          russia: 0
+          germany: 1,
+          australia: 2,
+          usa: 2,
+          ireland: 1,
+          russia: 1
         }
       },
       {
-        id: "medium",
-        text: "Medium-length programs (2-3 years)",
+        id: "traditional",
+        text: "Traditional university town with academic atmosphere",
+        scores: {
+          canada: 1,
+          uk: 2,
+          germany: 2,
+          australia: 1,
+          usa: 2,
+          ireland: 2,
+          russia: 2
+        }
+      },
+      {
+        id: "nature",
+        text: "Campus with nature and outdoor activities nearby",
         scores: {
           canada: 2,
           uk: 1,
           germany: 1,
           australia: 2,
           usa: 1,
-          ireland: 1,
+          ireland: 2,
           russia: 1
-        }
-      },
-      {
-        id: "long",
-        text: "Longer programs (4+ years)",
-        scores: {
-          canada: 1,
-          uk: 0,
-          germany: 2,
-          australia: 0,
-          usa: 2,
-          ireland: 0,
-          russia: 2
         }
       }
     ]
   }
 ];
 
+// The countriesInfo object remains unchanged
 export const countriesInfo: Record<string, CountryInfo> = {
   canada: {
     name: "Canada",

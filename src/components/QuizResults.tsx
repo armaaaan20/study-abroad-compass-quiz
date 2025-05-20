@@ -5,6 +5,7 @@ import { countriesInfo } from '../data/quizData';
 import LeadCaptureForm from './LeadCaptureForm';
 import { ScrollArea } from './ui/scroll-area';
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
+import { CheckCircle } from 'lucide-react';
 
 interface QuizResultsProps {
   resultCountry: Country;
@@ -27,6 +28,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<Country>(resultCountry);
   const [isMobile, setIsMobile] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
   
   // Check if mobile screen when component mounts and when window resizes
   useEffect(() => {
@@ -42,18 +44,33 @@ const QuizResults: React.FC<QuizResultsProps> = ({
     };
   }, []);
   
+  // Trigger animation completion after delay for staggered animations
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimationComplete(true);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Change active tab with animation effects
+  const handleTabChange = (country: Country) => {
+    setAnimationComplete(false);
+    setActiveTab(country);
+    setTimeout(() => setAnimationComplete(true), 300);
+  };
+  
   const getMatchReasons = (country: Country) => {
     const countryInfo = countriesInfo[country];
     const reasons = [];
+    if (answers.study_duration) reasons.push(countryInfo.features.study_duration);
+    if (answers.field) reasons.push(countryInfo.features.field);
     if (answers.budget) reasons.push(countryInfo.features.budget);
     if (answers.climate) reasons.push(countryInfo.features.climate);
     if (answers.language) reasons.push(countryInfo.features.language);
-    if (answers.field) reasons.push(countryInfo.features.field);
     if (answers.work) reasons.push(countryInfo.features.work);
     if (answers.residency) reasons.push(countryInfo.features.residency);
     if (answers.research) reasons.push(countryInfo.features.research);
     if (answers.university_ranking) reasons.push(countryInfo.features.university_ranking);
-    if (answers.study_duration) reasons.push(countryInfo.features.study_duration);
     
     return reasons;
   };
@@ -82,10 +99,15 @@ const QuizResults: React.FC<QuizResultsProps> = ({
 
   return (
     <div className="animate-fade-in">
-      <div className="p-4 sm:p-6 bg-white rounded-lg shadow-lg border border-gray-100 mb-6">
-        <div className="text-center mb-6">
-          <div className="text-5xl sm:text-7xl mb-2 animate-scale-in">{countriesInfo[resultCountry].flag}</div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-[#174a58] mb-2">
+      <div className="p-4 sm:p-6 bg-white rounded-lg shadow-lg border border-gray-100 mb-6 relative overflow-hidden">
+        {/* Background gradient animation */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#f0f4f5]/50 to-transparent animate-pulse opacity-70 pointer-events-none"></div>
+        
+        <div className="text-center mb-6 relative">
+          <div className="text-5xl sm:text-7xl mb-2 animate-bounce-gentle">
+            {countriesInfo[resultCountry].flag}
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-[#174a58] mb-2 animate-reveal-text">
             You should study in {countriesInfo[resultCountry].name}!
           </h2>
           <p className="text-gray-500">Based on your answers, these are your best matches:</p>
@@ -93,35 +115,56 @@ const QuizResults: React.FC<QuizResultsProps> = ({
 
         {/* Country Tabs - Improved for Mobile */}
         {isMobile ? (
-          <ScrollArea className="w-full mb-4">
-            <div className="flex space-x-1 pb-2">
-              {recommendedCountries.map((country) => (
-                <button
-                  key={country}
-                  className={`py-2 px-4 text-base font-medium flex-shrink-0 border-b-2 whitespace-nowrap ${
-                    activeTab === country
-                      ? 'border-[#3b8183] text-[#174a58] bg-[#3b8183]/10'
-                      : 'border-transparent text-gray-500 hover:text-[#174a58]'
-                  }`}
-                  onClick={() => setActiveTab(country)}
-                >
-                  <span className="mr-1">{countriesInfo[country].flag}</span>
-                  {countriesInfo[country].code}
-                  <span className="ml-1 text-xs">
-                    ({Math.round((scores[country] / totalMaxScore) * 100)}%)
-                  </span>
-                </button>
-              ))}
-            </div>
-          </ScrollArea>
+          <div className="relative mb-4">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+            
+            <ScrollArea className="w-full px-2 -mx-2">
+              <div className="flex space-x-2 pb-2 px-2 min-w-full">
+                {recommendedCountries.map((country, index) => (
+                  <button
+                    key={country}
+                    className={`py-2 px-4 text-sm font-medium flex-shrink-0 border-b-2 whitespace-nowrap rounded-t-md transition-all duration-300 ${
+                      activeTab === country
+                        ? 'border-[#3b8183] text-[#174a58] bg-[#3b8183]/10 shadow-md transform -translate-y-0.5'
+                        : 'border-transparent text-gray-500 hover:text-[#174a58] hover:bg-gray-50'
+                    }`}
+                    onClick={() => handleTabChange(country)}
+                    style={{ 
+                      animationDelay: `${index * 100}ms`,
+                      animationName: 'slideInFromBottom',
+                      animationDuration: '0.5s',
+                      animationTimingFunction: 'ease-out',
+                      animationFillMode: 'both'
+                    }}
+                  >
+                    <span className="mr-1">{countriesInfo[country].flag}</span>
+                    {countriesInfo[country].name.split(' ')[0]}
+                    <span className="ml-1 text-xs">
+                      ({Math.round((scores[country] / totalMaxScore) * 100)}%)
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
         ) : (
-          <Tabs defaultValue={resultCountry} onValueChange={(value) => setActiveTab(value as Country)} className="w-full mb-4">
+          <Tabs defaultValue={resultCountry} onValueChange={(value) => handleTabChange(value as Country)} className="w-full mb-4">
             <TabsList className="w-full flex justify-center bg-[#f0f4f5]">
-              {recommendedCountries.map((country) => (
+              {recommendedCountries.map((country, index) => (
                 <TabsTrigger 
                   key={country} 
                   value={country}
-                  className={activeTab === country ? 'data-[state=active]:bg-[#3b8183]/10 data-[state=active]:text-[#174a58]' : ''}
+                  className={`transition-all duration-300 data-[state=active]:animate-tab-active ${
+                    activeTab === country ? 'data-[state=active]:bg-[#3b8183]/10 data-[state=active]:text-[#174a58]' : ''
+                  }`}
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animationName: 'slideInFromBottom',
+                    animationDuration: '0.5s',
+                    animationTimingFunction: 'ease-out',
+                    animationFillMode: 'both'
+                  }}
                 >
                   <span className="mr-1">{countriesInfo[country].flag}</span>
                   {countriesInfo[country].name}
@@ -135,15 +178,29 @@ const QuizResults: React.FC<QuizResultsProps> = ({
         )}
         
         {/* Active Country Details */}
-        <div className="mb-6 animate-fade-in">
+        <div className="mb-6 animate-fade-in relative">
           <h3 className="text-lg sm:text-xl font-semibold font-poppins mb-3 text-gray-700">
             Why {countriesInfo[activeTab].name} is great for you:
           </h3>
           <ul className="space-y-2">
             {getMatchReasons(activeTab).map((reason, index) => (
-              <li key={index} className="flex items-start">
-                <span className="text-[#3b8183] mr-2 mt-0.5">✓</span>
-                <span className="text-sm sm:text-base">{reason}</span>
+              <li 
+                key={index} 
+                className={`flex items-start transition-all transform ${
+                  animationComplete ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                }`}
+                style={{ 
+                  transitionDelay: `${index * 100}ms`,
+                  transitionProperty: 'all',
+                  transitionDuration: '0.4s'
+                }}
+              >
+                <span className="text-[#3b8183] mr-2 mt-0.5 flex-shrink-0">
+                  <CheckCircle size={18} className="animate-pulse-subtle" />
+                </span>
+                <span className="text-sm sm:text-base hover:text-[#174a58] transition-colors duration-300">
+                  {reason}
+                </span>
               </li>
             ))}
           </ul>
@@ -152,7 +209,10 @@ const QuizResults: React.FC<QuizResultsProps> = ({
         {!formSubmitted ? (
           <LeadCaptureForm onSubmit={onFormSubmit} />
         ) : (
-          <div className="bg-green-50 border border-green-200 rounded-md p-4 text-center mb-6 animate-fade-in">
+          <div className="bg-green-50 border border-green-200 rounded-md p-4 text-center mb-6 animate-scale-in">
+            <div className="inline-block mb-2 animate-bounce-gentle">
+              <CheckCircle size={28} className="text-green-500 mx-auto" />
+            </div>
             <p className="text-green-700 font-medium">Thanks! We'll be in touch with guidance about studying in {countriesInfo[resultCountry].name}!</p>
           </div>
         )}
@@ -163,7 +223,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
             <div className="flex justify-center space-x-3 sm:space-x-4">
               <button 
                 onClick={shareResult} 
-                className="p-2 sm:p-3 bg-green-500 rounded-full text-white hover:bg-green-600 transition transform hover:scale-110"
+                className="p-2 sm:p-3 bg-green-500 rounded-full text-white hover:bg-green-600 transition transform hover:scale-110 animate-shimmer"
                 title="Share via WhatsApp"
               >
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -172,7 +232,8 @@ const QuizResults: React.FC<QuizResultsProps> = ({
               </button>
               <button 
                 onClick={shareViaEmail} 
-                className="p-2 sm:p-3 bg-[#174a58] rounded-full text-white hover:bg-[#3b8183] transition transform hover:scale-110"
+                className="p-2 sm:p-3 bg-[#174a58] rounded-full text-white hover:bg-[#3b8183] transition transform hover:scale-110 animate-shimmer"
+                style={{ animationDelay: "200ms" }}
                 title="Share via Email"
               >
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -184,7 +245,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
           
           <button 
             onClick={onReset} 
-            className="mt-6 px-5 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition font-medium transform hover:scale-105"
+            className="mt-6 px-5 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition font-medium transform hover:scale-105 active:scale-95"
           >
             Start Over
           </button>

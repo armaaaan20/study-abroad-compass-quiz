@@ -98,11 +98,30 @@ export const useQuizState = () => {
               if (!aIsEnglishSpeaking && bIsEnglishSpeaking) return 1;
             }
             
-            // Secondary sort based on specific criteria as before
+            // For study duration preference
+            if (state.answers['study_duration']) {
+              const durationPreference = state.answers['study_duration'];
+              
+              // Match countries with appropriate duration programs
+              const aDurationMatch = 
+                (durationPreference === 'short' && ['uk', 'ireland'].includes(a.country)) ||
+                (durationPreference === 'medium' && ['canada', 'australia'].includes(a.country)) ||
+                (durationPreference === 'long' && ['germany', 'usa', 'russia'].includes(a.country));
+                
+              const bDurationMatch = 
+                (durationPreference === 'short' && ['uk', 'ireland'].includes(b.country)) ||
+                (durationPreference === 'medium' && ['canada', 'australia'].includes(b.country)) ||
+                (durationPreference === 'long' && ['germany', 'usa', 'russia'].includes(b.country));
+              
+              if (aDurationMatch && !bDurationMatch) return -1;
+              if (!aDurationMatch && bDurationMatch) return 1;
+            }
+            
+            // Secondary sort based on other criteria
             const aWorkOpportunity = state.answers['work'] === 'yes' && a.country === 'canada' ? 2 : 
-                                     state.answers['work'] === 'yes' ? 1 : 0;
+                                   state.answers['work'] === 'yes' ? 1 : 0;
             const bWorkOpportunity = state.answers['work'] === 'yes' && b.country === 'canada' ? 2 : 
-                                     state.answers['work'] === 'yes' ? 1 : 0;
+                                   state.answers['work'] === 'yes' ? 1 : 0;
             
             if (aWorkOpportunity !== bWorkOpportunity) {
               return bWorkOpportunity - aWorkOpportunity;
@@ -134,9 +153,10 @@ export const useQuizState = () => {
       formSubmitted: true
     }));
     
-    // Show success message
+    // Show success message with animation
     toast("Thank you for your submission!", {
       description: "We'll contact you soon with free study abroad guidance.",
+      duration: 5000,
     });
     
     // Store data to be sent to Supabase
