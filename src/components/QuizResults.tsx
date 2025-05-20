@@ -115,16 +115,19 @@ const QuizResults: React.FC<QuizResultsProps> = ({
 
         {/* Country Tabs - Improved for Mobile */}
         {isMobile ? (
-          <div className="relative mb-4">
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+          <div className="relative mb-6">
+            {/* Left shadow gradient for scroll indication */}
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-10 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
             
-            <ScrollArea className="w-full px-2 -mx-2">
-              <div className="flex space-x-2 pb-2 px-2 min-w-full">
+            {/* Right shadow gradient for scroll indication */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-10 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+            
+            <ScrollArea orientation="horizontal" className="w-full">
+              <div className="flex space-x-1 pb-2 px-4 min-w-max">
                 {recommendedCountries.map((country, index) => (
                   <button
                     key={country}
-                    className={`py-2 px-4 text-sm font-medium flex-shrink-0 border-b-2 whitespace-nowrap rounded-t-md transition-all duration-300 ${
+                    className={`py-2 px-3 text-sm font-medium flex items-center justify-center border-b-2 rounded-t-md transition-all duration-300 min-w-[100px] ${
                       activeTab === country
                         ? 'border-[#3b8183] text-[#174a58] bg-[#3b8183]/10 shadow-md transform -translate-y-0.5'
                         : 'border-transparent text-gray-500 hover:text-[#174a58] hover:bg-gray-50'
@@ -139,7 +142,9 @@ const QuizResults: React.FC<QuizResultsProps> = ({
                     }}
                   >
                     <span className="mr-1">{countriesInfo[country].flag}</span>
-                    {countriesInfo[country].name.split(' ')[0]}
+                    <span className="whitespace-nowrap overflow-hidden text-ellipsis max-w-[60px]">
+                      {countriesInfo[country].name}
+                    </span>
                     <span className="ml-1 text-xs">
                       ({Math.round((scores[country] / totalMaxScore) * 100)}%)
                     </span>

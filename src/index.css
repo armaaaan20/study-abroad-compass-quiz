@@ -200,6 +200,49 @@
   }
 }
 
+/* New micro-animations for mobile improvements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(59, 129, 131, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(59, 129, 131, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(59, 129, 131, 0.2);
+  }
+}
+
+@keyframes border-pulse {
+  0% {
+    border-color: rgba(59, 129, 131, 0.3);
+  }
+  50% {
+    border-color: rgba(59, 129, 131, 0.8);
+  }
+  100% {
+    border-color: rgba(59, 129, 131, 0.3);
+  }
+}
+
+@keyframes scroll-indicator {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
@@ -230,4 +273,61 @@
 
 .animate-tab-active {
   animation: tab-active 0.3s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s infinite ease-in-out;
+}
+
+.animate-border-pulse {
+  animation: border-pulse 2s infinite;
+}
+
+.animate-scroll-indicator {
+  animation: scroll-indicator 1.5s infinite ease-in-out;
+}
+
+/* Specific improvements for mobile country tabs */
+.mobile-tab-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-tab-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animation for the country flag */
+.country-flag-animation {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Enhanced button effects */
+.enhanced-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-button:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 80%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+}
+
+.enhanced-button:hover:after {
+  transform: scale(2);
+  opacity: 0.3;
 }

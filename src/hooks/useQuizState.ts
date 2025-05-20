@@ -24,8 +24,11 @@ const initialState: QuizState = {
   formSubmitted: false
 };
 
-export const useQuizState = () => {
-  const [state, setState] = useState<QuizState>({...initialState});
+export const useQuizState = (skipLeadCapture: boolean = false) => {
+  const [state, setState] = useState<QuizState>({
+    ...initialState,
+    formSubmitted: skipLeadCapture
+  });
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleSelectOption = (questionId: string, optionId: string) => {
@@ -131,7 +134,19 @@ export const useQuizState = () => {
             return a.country.localeCompare(b.country);
           });
 
+        // Make sure all countries appear with at least some score for variety
+        const allCountries = Object.keys(state.scores) as Country[];
+        const countriesInResult = sortedCountries.map(item => item.country);
+        
+        // Add any missing countries to the end
+        allCountries.forEach(country => {
+          if (!countriesInResult.includes(country)) {
+            sortedCountries.push({ country, score: 0 });
+          }
+        });
+
         const result = sortedCountries[0].country;
+        // Always show all three top countries even if scores are tied at zero
         const topThree = sortedCountries.slice(0, 3).map(item => item.country);
         
         setState(prevState => ({
@@ -167,7 +182,8 @@ export const useQuizState = () => {
       quiz_result: state.result,
       recommended_countries: state.topThreeCountries,
       scores: state.scores,
-      answers: state.answers
+      answers: state.answers,
+      form_location: 'post-quiz'
     };
     
     try {
@@ -187,7 +203,10 @@ export const useQuizState = () => {
   };
 
   const resetQuiz = () => {
-    setState({...initialState});
+    setState({
+      ...initialState,
+      formSubmitted: skipLeadCapture
+    });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

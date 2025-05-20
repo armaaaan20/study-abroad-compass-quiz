@@ -5,7 +5,11 @@ import QuizResults from './QuizResults';
 import QuizInProgress from './QuizInProgress';
 import { useQuizState } from '../hooks/useQuizState';
 
-const QuizContainer: React.FC = () => {
+interface QuizContainerProps {
+  skipLeadCapture?: boolean;
+}
+
+const QuizContainer: React.FC<QuizContainerProps> = ({ skipLeadCapture = false }) => {
   const { 
     state, 
     isAnimating, 
@@ -13,7 +17,7 @@ const QuizContainer: React.FC = () => {
     handleLeadFormSubmit, 
     resetQuiz,
     goToPreviousQuestion
-  } = useQuizState();
+  } = useQuizState(skipLeadCapture);
 
   const currentQuestion = quizQuestions[state.currentQuestionIndex];
   const selectedOptionId = currentQuestion ? state.answers[currentQuestion.id] : null;
@@ -40,7 +44,7 @@ const QuizContainer: React.FC = () => {
               answers={state.answers}
               onReset={resetQuiz}
               onFormSubmit={handleLeadFormSubmit}
-              formSubmitted={state.formSubmitted}
+              formSubmitted={state.formSubmitted || skipLeadCapture}
             />
           )}
         </>

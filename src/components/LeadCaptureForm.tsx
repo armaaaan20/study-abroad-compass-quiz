@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 
 interface LeadCaptureFormProps {
   onSubmit: (name: string, email: string, whatsapp: string) => void;
+  isPreQuiz?: boolean;
 }
 
-const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit }) => {
+const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit, isPreQuiz = false }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -49,9 +50,9 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <div className="bg-[#174a58]/5 border border-[#174a58]/20 rounded-lg p-5 mb-6 animate-fade-in">
+    <div className={`${isPreQuiz ? '' : 'bg-[#174a58]/5 border border-[#174a58]/20 rounded-lg p-5'} mb-6 animate-fade-in`}>
       <h3 className="text-center text-xl font-semibold font-poppins mb-4 text-[#174a58]">
-        Get Free Study Abroad Guidance
+        {isPreQuiz ? 'Sign up for free study abroad guidance' : 'Get Free Study Abroad Guidance'}
       </h3>
       
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -108,9 +109,9 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({ onSubmit }) => {
         
         <button
           type="submit"
-          className="w-full py-3 bg-[#3b8183] text-white rounded-md hover:bg-[#174a58] transition-colors duration-300 font-medium transform hover:scale-[1.01]"
+          className="w-full py-3 bg-[#3b8183] text-white rounded-md hover:bg-[#174a58] transition-colors duration-300 font-medium transform hover:scale-[1.01] enhanced-button"
         >
-          Get Expert Guidance
+          {isPreQuiz ? 'Take the Quiz' : 'Get Expert Guidance'}
         </button>
         
         <p className="text-xs text-gray-500 text-center">
