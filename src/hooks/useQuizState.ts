@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Country, QuizState } from '../types/quiz';
 import { quizQuestions } from '../data/quizData';
@@ -24,7 +23,7 @@ const initialState: QuizState = {
   formSubmitted: false
 };
 
-export const useQuizState = (skipLeadCapture: boolean = false) => {
+export const useQuizState = (skipLeadCapture: boolean = false, leadId: string | null = null) => {
   const [state, setState] = useState<QuizState>({
     ...initialState,
     formSubmitted: skipLeadCapture
@@ -157,9 +156,70 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
           topThreeCountries: topThree,
           showResults: true
         }));
+        
+        // If lead was already submitted (from pre-quiz), update the best_country
+        if (skipLeadCapture) {
+          if (leadId) {
+            // If we have a specific leadId, update that one
+            updateLeadWithId(leadId, result);
+          } else {
+            // Otherwise find the most recent one
+            updateBestCountryInDatabase(result);
+          }
+        }
       }
       setIsAnimating(false);
     }, 400);
+  };
+
+  // Function to update a specific lead with ID
+  const updateLeadWithId = async (id: string, bestCountry: Country) => {
+    try {
+      console.log("Updating lead with ID:", id, "Best country:", bestCountry);
+      
+      const { error } = await supabase
+        .from('student_leads')
+        .update({ best_country: bestCountry })
+        .eq('id', id);
+        
+      if (error) throw error;
+      
+      console.log("Successfully updated lead with ID:", id);
+    } catch (error) {
+      console.error('Error updating lead:', error);
+    }
+  };
+
+  // Function to update best_country in database for already submitted leads
+  const updateBestCountryInDatabase = async (bestCountry: Country) => {
+    try {
+      console.log("Updating best_country for existing lead:", bestCountry);
+      
+      // Query to find the most recent lead without a best_country value
+      const { data: recentLeads, error: fetchError } = await supabase
+        .from('student_leads')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1);
+      
+      if (fetchError) throw fetchError;
+      
+      if (recentLeads && recentLeads.length > 0) {
+        const leadId = recentLeads[0].id;
+        
+        // Update the lead with the best country
+        const { error: updateError } = await supabase
+          .from('student_leads')
+          .update({ best_country: bestCountry })
+          .eq('id', leadId);
+          
+        if (updateError) throw updateError;
+        
+        console.log("Successfully updated best_country for lead:", leadId);
+      }
+    } catch (error) {
+      console.error('Error updating best country in database:', error);
+    }
   };
 
   const handleLeadFormSubmit = async (name: string, email: string, whatsapp: string) => {
@@ -194,7 +254,7 @@ export const useQuizState = (skipLeadCapture: boolean = false) => {
         
       if (error) throw error;
       
-      console.log('Lead submitted successfully');
+      console.log('Lead submitted successfully with best_country:', state.result);
     } catch (error) {
       console.error('Error storing lead:', error);
       toast("There was an error saving your data.", {

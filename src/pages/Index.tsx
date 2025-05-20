@@ -9,20 +9,29 @@ import { supabase } from '@/integrations/supabase/client';
 const Index = () => {
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   const handleLeadFormSubmit = async (name: string, email: string, whatsapp: string) => {
     try {
       setIsSubmitting(true);
-      const { error } = await supabase
+      // Initially save with null best_country
+      const { data, error } = await supabase
         .from('student_leads')
         .insert([{ 
           name, 
           email, 
           whatsapp, 
           best_country: null // Initially null, will be updated after quiz completion
-        }]);
+        }])
+        .select();
         
       if (error) throw error;
+      
+      // Store the lead ID for later updating
+      if (data && data.length > 0) {
+        setLeadId(data[0].id);
+        console.log("Created new lead with ID:", data[0].id);
+      }
       
       setLeadSubmitted(true);
       toast("Thank you for your information!", {
@@ -64,7 +73,7 @@ const Index = () => {
             </div>
           </div>
         ) : (
-          <QuizContainer skipLeadCapture={true} />
+          <QuizContainer skipLeadCapture={true} leadId={leadId} />
         )}
         
         <footer className="mt-8 sm:mt-16 text-center text-gray-500 text-xs sm:text-sm pb-4">

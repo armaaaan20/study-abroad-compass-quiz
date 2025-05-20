@@ -7,9 +7,10 @@ import { useQuizState } from '../hooks/useQuizState';
 
 interface QuizContainerProps {
   skipLeadCapture?: boolean;
+  leadId?: string | null;
 }
 
-const QuizContainer: React.FC<QuizContainerProps> = ({ skipLeadCapture = false }) => {
+const QuizContainer: React.FC<QuizContainerProps> = ({ skipLeadCapture = false, leadId = null }) => {
   const { 
     state, 
     isAnimating, 
@@ -18,7 +19,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ skipLeadCapture = false }
     handleLeadFormSubmit, 
     resetQuiz,
     goToPreviousQuestion
-  } = useQuizState(skipLeadCapture);
+  } = useQuizState(skipLeadCapture, leadId);
 
   const currentQuestion = quizQuestions[state.currentQuestionIndex];
   const selectedOptionId = currentQuestion ? state.answers[currentQuestion.id] : null;
