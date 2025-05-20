@@ -14,7 +14,8 @@ const initialState: QuizState = {
     germany: 0,
     australia: 0,
     usa: 0,
-    ireland: 0
+    ireland: 0,
+    russia: 0
   },
   result: null,
   topThreeCountries: [],
@@ -69,12 +70,39 @@ export const useQuizState = () => {
               return b.score - a.score;
             }
             
-            // Secondary sort based on specific criteria
-            // For example, for similar scores, prefer countries with better work opportunities
-            const aWorkOpportunity = state.answers['work'] === 'work_important' && a.country === 'canada' ? 2 : 
-                                     state.answers['work'] === 'work_important' ? 1 : 0;
-            const bWorkOpportunity = state.answers['work'] === 'work_important' && b.country === 'canada' ? 2 : 
-                                     state.answers['work'] === 'work_important' ? 1 : 0;
+            // Enhanced tie-breaking logic
+            // For medical field preference
+            if (state.answers['field'] === 'healthcare') {
+              const aIsMedicalStrong = ['russia', 'germany'].includes(a.country);
+              const bIsMedicalStrong = ['russia', 'germany'].includes(b.country);
+              
+              if (aIsMedicalStrong && !bIsMedicalStrong) return -1;
+              if (!aIsMedicalStrong && bIsMedicalStrong) return 1;
+            }
+            
+            // For research preference
+            if (state.answers['research']) {
+              const aIsResearchStrong = ['usa', 'uk', 'germany', 'russia'].includes(a.country);
+              const bIsResearchStrong = ['usa', 'uk', 'germany', 'russia'].includes(b.country);
+              
+              if (aIsResearchStrong && !bIsResearchStrong) return -1;
+              if (!aIsResearchStrong && bIsResearchStrong) return 1;
+            }
+            
+            // For language considerations
+            if (state.answers['language'] === 'no') {
+              const aIsEnglishSpeaking = ['usa', 'uk', 'canada', 'australia', 'ireland'].includes(a.country);
+              const bIsEnglishSpeaking = ['usa', 'uk', 'canada', 'australia', 'ireland'].includes(b.country);
+              
+              if (aIsEnglishSpeaking && !bIsEnglishSpeaking) return -1;
+              if (!aIsEnglishSpeaking && bIsEnglishSpeaking) return 1;
+            }
+            
+            // Secondary sort based on specific criteria as before
+            const aWorkOpportunity = state.answers['work'] === 'yes' && a.country === 'canada' ? 2 : 
+                                     state.answers['work'] === 'yes' ? 1 : 0;
+            const bWorkOpportunity = state.answers['work'] === 'yes' && b.country === 'canada' ? 2 : 
+                                     state.answers['work'] === 'yes' ? 1 : 0;
             
             if (aWorkOpportunity !== bWorkOpportunity) {
               return bWorkOpportunity - aWorkOpportunity;

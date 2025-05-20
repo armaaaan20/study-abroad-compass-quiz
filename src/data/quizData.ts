@@ -15,7 +15,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 2,
           australia: 0,
           usa: 0,
-          ireland: 1
+          ireland: 1,
+          russia: 2
         }
       },
       {
@@ -27,7 +28,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 2,
           usa: 0,
-          ireland: 1
+          ireland: 1,
+          russia: 2
         }
       },
       {
@@ -39,7 +41,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 0,
           australia: 1,
           usa: 1,
-          ireland: 2
+          ireland: 2,
+          russia: 1
         }
       },
       {
@@ -51,7 +54,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 0,
           australia: 1,
           usa: 2,
-          ireland: 0
+          ireland: 0,
+          russia: 0
         }
       }
     ]
@@ -69,7 +73,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 2,
           australia: 0,
           usa: 1,
-          ireland: 1
+          ireland: 1,
+          russia: 2
         }
       },
       {
@@ -81,7 +86,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 0,
           australia: 2,
           usa: 1,
-          ireland: 0
+          ireland: 0,
+          russia: 0
         }
       },
       {
@@ -93,7 +99,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 1,
           usa: 1,
-          ireland: 2
+          ireland: 2,
+          russia: 1
         }
       },
       {
@@ -105,7 +112,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 1,
           usa: 1,
-          ireland: 1
+          ireland: 1,
+          russia: 1
         }
       }
     ]
@@ -123,7 +131,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 2,
           australia: 1,
           usa: 1,
-          ireland: 1
+          ireland: 1,
+          russia: 2
         }
       },
       {
@@ -135,7 +144,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 0,
           australia: 2,
           usa: 2,
-          ireland: 2
+          ireland: 2,
+          russia: 0
         }
       }
     ]
@@ -153,7 +163,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 2,
           australia: 2,
           usa: 2,
-          ireland: 1
+          ireland: 1,
+          russia: 1
         }
       },
       {
@@ -165,7 +176,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 1,
           usa: 2,
-          ireland: 1
+          ireland: 1,
+          russia: 0
         }
       },
       {
@@ -177,7 +189,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 1,
           usa: 1,
-          ireland: 2
+          ireland: 2,
+          russia: 0
         }
       },
       {
@@ -186,10 +199,11 @@ export const quizQuestions: QuizQuestion[] = [
         scores: {
           canada: 2,
           uk: 1,
-          germany: 1,
+          germany: 2,
           australia: 2,
           usa: 1,
-          ireland: 1
+          ireland: 1,
+          russia: 2
         }
       }
     ]
@@ -207,7 +221,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 2,
           usa: 1,
-          ireland: 2
+          ireland: 2,
+          russia: 1
         }
       },
       {
@@ -219,7 +234,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 1,
           usa: 1,
-          ireland: 1
+          ireland: 1,
+          russia: 1
         }
       }
     ]
@@ -237,7 +253,8 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 2,
           usa: 1,
-          ireland: 1
+          ireland: 1,
+          russia: 0
         }
       },
       {
@@ -249,7 +266,144 @@ export const quizQuestions: QuizQuestion[] = [
           germany: 1,
           australia: 1,
           usa: 1,
-          ireland: 1
+          ireland: 1,
+          russia: 2
+        }
+      }
+    ]
+  },
+  // New intellectual questions
+  {
+    id: "research",
+    question: "How important is research quality and innovation to you?",
+    options: [
+      {
+        id: "very-important",
+        text: "Very important - I want to be at cutting-edge institutions",
+        scores: {
+          canada: 1,
+          uk: 2,
+          germany: 2,
+          australia: 1,
+          usa: 2,
+          ireland: 0,
+          russia: 2
+        }
+      },
+      {
+        id: "somewhat-important",
+        text: "Somewhat important",
+        scores: {
+          canada: 2,
+          uk: 1,
+          germany: 1,
+          australia: 2,
+          usa: 1,
+          ireland: 1,
+          russia: 1
+        }
+      },
+      {
+        id: "not-important",
+        text: "Not important - I'm more focused on practical skills",
+        scores: {
+          canada: 2,
+          uk: 0,
+          germany: 0,
+          australia: 2,
+          usa: 0,
+          ireland: 2,
+          russia: 0
+        }
+      }
+    ]
+  },
+  {
+    id: "university_ranking",
+    question: "How much do global university rankings matter to you?",
+    options: [
+      {
+        id: "very-important",
+        text: "Very important - I want a highly ranked university",
+        scores: {
+          canada: 1,
+          uk: 2,
+          germany: 1,
+          australia: 1,
+          usa: 2,
+          ireland: 0,
+          russia: 1
+        }
+      },
+      {
+        id: "somewhat-important",
+        text: "Somewhat important - Ranking matters but isn't everything",
+        scores: {
+          canada: 2,
+          uk: 1,
+          germany: 2,
+          australia: 2,
+          usa: 1,
+          ireland: 1,
+          russia: 2
+        }
+      },
+      {
+        id: "not-important",
+        text: "Not important - I'm more concerned with other factors",
+        scores: {
+          canada: 1,
+          uk: 0,
+          germany: 1,
+          australia: 1,
+          usa: 0,
+          ireland: 2,
+          russia: 2
+        }
+      }
+    ]
+  },
+  {
+    id: "study_duration",
+    question: "What is your preferred program duration?",
+    options: [
+      {
+        id: "short",
+        text: "Shorter programs (1-2 years)",
+        scores: {
+          canada: 0,
+          uk: 2,
+          germany: 0,
+          australia: 1,
+          usa: 0,
+          ireland: 2,
+          russia: 0
+        }
+      },
+      {
+        id: "medium",
+        text: "Medium-length programs (2-3 years)",
+        scores: {
+          canada: 2,
+          uk: 1,
+          germany: 1,
+          australia: 2,
+          usa: 1,
+          ireland: 1,
+          russia: 1
+        }
+      },
+      {
+        id: "long",
+        text: "Longer programs (4+ years)",
+        scores: {
+          canada: 1,
+          uk: 0,
+          germany: 2,
+          australia: 0,
+          usa: 2,
+          ireland: 0,
+          russia: 2
         }
       }
     ]
@@ -268,7 +422,10 @@ export const countriesInfo: Record<string, CountryInfo> = {
       language: "English-speaking environment, welcoming to Indian students",
       field: "World-class universities excelling in STEM and healthcare, popular among Indian students",
       work: "Up to 20 hours per week during studies, good for Indian students seeking financial support",
-      residency: "Strong pathway to permanent residency through Post-Graduation Work Permit, favored by many Indians"
+      residency: "Strong pathway to permanent residency through Post-Graduation Work Permit, favored by many Indians",
+      research: "Excellent research facilities with government funding in medical and STEM fields",
+      university_ranking: "Several universities ranked in global top 100, particularly strong in research",
+      study_duration: "Flexible programs typically 2-4 years with optional co-op terms"
     }
   },
   uk: {
@@ -282,7 +439,10 @@ export const countriesInfo: Record<string, CountryInfo> = {
       language: "English-speaking environment with large Indian diaspora community",
       field: "Prestigious universities with excellent business and arts programs with strong recognition in India",
       work: "Up to 20 hours per week during term time, good for supporting studies",
-      residency: "Graduate Immigration Route offers 2-year stay back opportunity after studies"
+      residency: "Graduate Immigration Route offers 2-year stay back opportunity after studies",
+      research: "World-leading research institutions with centuries of academic excellence",
+      university_ranking: "Home to many universities in global top 50, including Oxford and Cambridge",
+      study_duration: "Efficient programs often completed in just 1 year (Masters) or 3 years (Bachelors)"
     }
   },
   germany: {
@@ -296,7 +456,10 @@ export const countriesInfo: Record<string, CountryInfo> = {
       language: "Many programs require German proficiency, though English programs are increasing",
       field: "Strong engineering and technical education valued by Indian employers",
       work: "Up to 120 full days or 240 half days per year, sufficient for part-time work",
-      residency: "Possible pathway to residency after graduation with 18-month job-seeking visa"
+      residency: "Possible pathway to residency after graduation with 18-month job-seeking visa",
+      research: "Exceptional research infrastructure with strong industry collaborations",
+      university_ranking: "Technical universities particularly well-regarded globally",
+      study_duration: "Programs typically longer (4-5 years for combined Bachelor and Master)"
     }
   },
   australia: {
@@ -310,7 +473,10 @@ export const countriesInfo: Record<string, CountryInfo> = {
       language: "English-speaking environment with large Indian community",
       field: "High-quality education across all fields with strong recognition in India",
       work: "Up to 40 hours per fortnight during term, good for financial support",
-      residency: "Post-Study Work visa options ranging from 2-4 years for Indian graduates"
+      residency: "Post-Study Work visa options ranging from 2-4 years for Indian graduates",
+      research: "Strong research capacity in environmental sciences and medicine",
+      university_ranking: "Several universities in global top 50 with excellent facilities",
+      study_duration: "Standard 3-year bachelor and 2-year master programs with industry connections"
     }
   },
   usa: {
@@ -324,7 +490,10 @@ export const countriesInfo: Record<string, CountryInfo> = {
       language: "English-speaking environment with vibrant Indian community",
       field: "World-renowned universities for STEM and business, highly valued by Indian employers",
       work: "Limited on-campus work options during studies",
-      residency: "OPT offers 1-3 years of post-study work opportunity, with H-1B visa possibilities"
+      residency: "OPT offers 1-3 years of post-study work opportunity, with H-1B visa possibilities",
+      research: "Unparalleled research output and innovation ecosystem with highest funding",
+      university_ranking: "Dominates global university rankings with many institutions in top 100",
+      study_duration: "Four-year bachelor's degrees and typically 2-year master's programs"
     }
   },
   ireland: {
@@ -338,7 +507,27 @@ export const countriesInfo: Record<string, CountryInfo> = {
       language: "English-speaking environment with growing Indian community",
       field: "Strong in technology, pharmaceuticals, and business, sectors valuable for Indian career growth",
       work: "Up to 20 hours per week during term time, good for supporting studies",
-      residency: "Two-year stay back option after graduation, attractive to Indian students"
+      residency: "Two-year stay back option after graduation, attractive to Indian students",
+      research: "Growing research capacity in tech and pharmaceutical sectors",
+      university_ranking: "Some universities achieving global recognition in specific fields",
+      study_duration: "Standard European format with 3-4 year bachelor's and 1-2 year master's programs"
+    }
+  },
+  russia: {
+    name: "Russia",
+    code: "RU",
+    flag: "🇷🇺",
+    color: "quiz-red",
+    features: {
+      budget: "Very affordable education (₹2-8 lakh per year) making it accessible for many Indian students",
+      climate: "Cold winters with warm summers in most university cities",
+      language: "Russian language required for most programs, though English programs are available in medicine",
+      field: "World-class medical education with direct patient interaction early in training, recognized by MCI for Indian students",
+      work: "Limited part-time work options but much lower cost of living",
+      residency: "Limited pathways to permanent residency after graduation",
+      research: "Strong tradition in fundamental sciences, mathematics and medicine with historical excellence",
+      university_ranking: "Several medical universities well-recognized globally for quality education",
+      study_duration: "Medical programs typically 6 years including internship, comprehensive training"
     }
   }
 };

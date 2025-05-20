@@ -1,8 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Country } from '../types/quiz';
 import { countriesInfo } from '../data/quizData';
 import LeadCaptureForm from './LeadCaptureForm';
+import { ScrollArea } from './ui/scroll-area';
+import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
 
 interface QuizResultsProps {
   resultCountry: Country;
@@ -24,6 +26,21 @@ const QuizResults: React.FC<QuizResultsProps> = ({
   formSubmitted
 }) => {
   const [activeTab, setActiveTab] = useState<Country>(resultCountry);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if mobile screen when component mounts and when window resizes
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
   
   const getMatchReasons = (country: Country) => {
     const countryInfo = countriesInfo[country];
@@ -34,6 +51,9 @@ const QuizResults: React.FC<QuizResultsProps> = ({
     if (answers.field) reasons.push(countryInfo.features.field);
     if (answers.work) reasons.push(countryInfo.features.work);
     if (answers.residency) reasons.push(countryInfo.features.residency);
+    if (answers.research) reasons.push(countryInfo.features.research);
+    if (answers.university_ranking) reasons.push(countryInfo.features.university_ranking);
+    if (answers.study_duration) reasons.push(countryInfo.features.study_duration);
     
     return reasons;
   };
@@ -71,26 +91,48 @@ const QuizResults: React.FC<QuizResultsProps> = ({
           <p className="text-gray-500">Based on your answers, these are your best matches:</p>
         </div>
 
-        {/* Country Tabs - Responsive */}
-        <div className="flex flex-wrap border-b border-gray-200 mb-4 gap-1">
-          {recommendedCountries.map((country) => (
-            <button
-              key={country}
-              className={`py-1 px-2 sm:py-2 sm:px-4 text-sm sm:text-base font-medium border-b-2 transition-all duration-300 flex-shrink-0 ${
-                activeTab === country
-                  ? 'border-[#3b8183] text-[#174a58]'
-                  : 'border-transparent text-gray-500 hover:text-[#174a58] hover:border-gray-300'
-              }`}
-              onClick={() => setActiveTab(country)}
-            >
-              <span className="mr-1">{countriesInfo[country].flag}</span>
-              {window.innerWidth < 350 ? countriesInfo[country].code : countriesInfo[country].name}
-              <span className="ml-1 text-xs sm:text-sm font-normal">
-                ({Math.round((scores[country] / totalMaxScore) * 100)}%)
-              </span>
-            </button>
-          ))}
-        </div>
+        {/* Country Tabs - Improved for Mobile */}
+        {isMobile ? (
+          <ScrollArea className="w-full mb-4">
+            <div className="flex space-x-1 pb-2">
+              {recommendedCountries.map((country) => (
+                <button
+                  key={country}
+                  className={`py-2 px-4 text-base font-medium flex-shrink-0 border-b-2 whitespace-nowrap ${
+                    activeTab === country
+                      ? 'border-[#3b8183] text-[#174a58] bg-[#3b8183]/10'
+                      : 'border-transparent text-gray-500 hover:text-[#174a58]'
+                  }`}
+                  onClick={() => setActiveTab(country)}
+                >
+                  <span className="mr-1">{countriesInfo[country].flag}</span>
+                  {countriesInfo[country].code}
+                  <span className="ml-1 text-xs">
+                    ({Math.round((scores[country] / totalMaxScore) * 100)}%)
+                  </span>
+                </button>
+              ))}
+            </div>
+          </ScrollArea>
+        ) : (
+          <Tabs defaultValue={resultCountry} onValueChange={(value) => setActiveTab(value as Country)} className="w-full mb-4">
+            <TabsList className="w-full flex justify-center bg-[#f0f4f5]">
+              {recommendedCountries.map((country) => (
+                <TabsTrigger 
+                  key={country} 
+                  value={country}
+                  className={activeTab === country ? 'data-[state=active]:bg-[#3b8183]/10 data-[state=active]:text-[#174a58]' : ''}
+                >
+                  <span className="mr-1">{countriesInfo[country].flag}</span>
+                  {countriesInfo[country].name}
+                  <span className="ml-1 text-xs">
+                    ({Math.round((scores[country] / totalMaxScore) * 100)}%)
+                  </span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        )}
         
         {/* Active Country Details */}
         <div className="mb-6 animate-fade-in">

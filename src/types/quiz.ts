@@ -11,7 +11,7 @@ export interface QuizQuestion {
   options: QuizOption[];
 }
 
-export type Country = 'canada' | 'uk' | 'germany' | 'australia' | 'usa' | 'ireland';
+export type Country = 'canada' | 'uk' | 'germany' | 'australia' | 'usa' | 'ireland' | 'russia';
 
 export interface CountryInfo {
   name: string;
