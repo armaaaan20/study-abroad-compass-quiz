@@ -12,6 +12,7 @@ interface QuizInProgressProps {
   isAnimating: boolean;
   onSelectOption: (questionId: string, optionId: string) => void;
   onPreviousClick: () => void;
+  answers: Record<string, string>;
 }
 
 const QuizInProgress: React.FC<QuizInProgressProps> = ({
@@ -21,13 +22,19 @@ const QuizInProgress: React.FC<QuizInProgressProps> = ({
   selectedOptionId,
   isAnimating,
   onSelectOption,
-  onPreviousClick
+  onPreviousClick,
+  answers
 }) => {
+  // Calculate completed questions for progress
+  const completedQuestions = Object.keys(answers).length;
+  const progressPercentage = (completedQuestions / totalQuestions) * 100;
+  
   return (
     <div className={`bg-white rounded-lg shadow-lg border border-gray-100 p-4 sm:p-6 ${isAnimating ? 'opacity-70' : 'opacity-100'} transition-opacity duration-300`}>
       <ProgressBar 
         currentQuestion={currentQuestionIndex} 
         totalQuestions={totalQuestions} 
+        progress={progressPercentage}
       />
       
       <div className="my-6 sm:my-8 animate-fade-in">

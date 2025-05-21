@@ -35,6 +35,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ skipLeadCapture = false, 
           isAnimating={isAnimating}
           onSelectOption={handleSelectOption}
           onPreviousClick={goToPreviousQuestion}
+          answers={state.answers}
         />
       ) : (
         <>

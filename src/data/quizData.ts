@@ -199,41 +199,41 @@ export const quizQuestions: QuizQuestion[] = [
     question: "What is your estimated study budget per year (in INR)?",
     options: [
       {
-        id: "below-8-lakh",
-        text: "Below ₹8 lakh",
+        id: "below-10-lakh",
+        text: "Below ₹10 lakh",
         scores: {
           canada: 0,
           uk: 0,
           germany: 2,
           australia: 0,
           usa: 0,
-          ireland: 1,
+          ireland: 0,
           russia: 2
         }
       },
       {
-        id: "8-16-lakh",
-        text: "₹8 lakh–₹16 lakh",
+        id: "10-15-lakh",
+        text: "₹10 lakh–₹15 lakh",
         scores: {
           canada: 2,
           uk: 1,
           germany: 1,
-          australia: 2,
+          australia: 1,
           usa: 0,
-          ireland: 1,
+          ireland: 2,
           russia: 2
         }
       },
       {
-        id: "16-25-lakh",
-        text: "₹16 lakh–₹25 lakh",
+        id: "15-25-lakh",
+        text: "₹15 lakh–₹25 lakh",
         scores: {
           canada: 1,
           uk: 2,
           germany: 0,
-          australia: 1,
+          australia: 2,
           usa: 1,
-          ireland: 2,
+          ireland: 1,
           russia: 1
         }
       },

@@ -1,26 +1,24 @@
 
 import React from 'react';
+import { Progress } from '@/components/ui/progress';
 
 interface ProgressBarProps {
   currentQuestion: number;
   totalQuestions: number;
+  progress?: number;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ currentQuestion, totalQuestions }) => {
-  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+const ProgressBar: React.FC<ProgressBarProps> = ({ currentQuestion, totalQuestions, progress }) => {
+  // Use passed progress if available, otherwise calculate based on current question
+  const progressValue = progress !== undefined ? progress : ((currentQuestion + 1) / totalQuestions) * 100;
   
   return (
     <div className="w-full">
       <div className="flex justify-between text-xs mb-1">
         <span className="text-gray-600">Question {currentQuestion + 1}/{totalQuestions}</span>
-        <span className="text-gray-600">{Math.round(progress)}% Complete</span>
+        <span className="text-gray-600">{Math.round(progressValue)}% Complete</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
-        <div 
-          className="h-2 rounded-full bg-gradient-to-r from-[#174a58] to-[#3b8183] transition-all duration-500 ease-in-out" 
-          style={{ width: `${progress}%` }}
-        ></div>
-      </div>
+      <Progress value={progressValue} className="h-2 bg-gray-200" />
     </div>
   );
 };
