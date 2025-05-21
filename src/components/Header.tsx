@@ -11,7 +11,7 @@ const Header = () => {
           alt="EduSync Logo"
           className="w-10 h-10 sm:w-12 sm:h-12 mr-2 sm:mr-3 object-contain"
         />
-        <h2 className="text-white text-lg sm:text-xl font-semibold">EdusphereOverseas</h2>
+        <h2 className="text-white text-lg sm:text-xl font-semibold">Edusphere Overseas</h2>
       </div>
       
       <h1 className="hidden sm:block text-xl sm:text-2xl font-bold text-white">Your Guide to Study Aboard</h1>
