@@ -77,7 +77,7 @@ const Index = () => {
         )}
         
         <footer className="mt-8 sm:mt-16 text-center text-gray-500 text-xs sm:text-sm pb-4">
-          <p>© 2025 EduSync Study Abroad Guide. All rights reserved Developed By Armaan @ Neblixlabs.</p>
+          <p>© 2025 EduSync Study Abroad Guide. All rights reserved Developed By Armaan @<a src="nebulixlabs.vercel.app">Neblixlabs</a></p>
         </footer>
       </div>
     </div>
