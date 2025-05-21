@@ -152,7 +152,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({
               >
                 <ChevronLeft size={16} />
               </button>
-              <span className="text-xs text-gray-500">Scroll to see all countries</span>
+              <span className="text-xs text-gray-500"></span>
               <button 
                 onClick={() => handleScroll('right')} 
                 className="p-1 bg-gray-100 rounded-full text-gray-600 hover:bg-gray-200"
