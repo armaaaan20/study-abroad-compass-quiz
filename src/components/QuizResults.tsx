@@ -5,7 +5,7 @@ import { countriesInfo } from '../data/quizData';
 import LeadCaptureForm from './LeadCaptureForm';
 import { ScrollArea } from './ui/scroll-area';
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ChevronRight, ChevronLeft } from 'lucide-react';
 
 interface QuizResultsProps {
   resultCountry: Country;
@@ -29,6 +29,8 @@ const QuizResults: React.FC<QuizResultsProps> = ({
   const [activeTab, setActiveTab] = useState<Country>(resultCountry);
   const [isMobile, setIsMobile] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
   
   // Check if mobile screen when component mounts and when window resizes
   useEffect(() => {
@@ -59,6 +61,22 @@ const QuizResults: React.FC<QuizResultsProps> = ({
     setTimeout(() => setAnimationComplete(true), 300);
   };
   
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 150; // Adjust based on your tab width
+      const newPosition = direction === 'left' 
+        ? Math.max(0, scrollPosition - scrollAmount)
+        : scrollPosition + scrollAmount;
+      
+      scrollRef.current.scrollTo({
+        left: newPosition,
+        behavior: 'smooth'
+      });
+      
+      setScrollPosition(newPosition);
+    }
+  };
+
   const getMatchReasons = (country: Country) => {
     const countryInfo = countriesInfo[country];
     const reasons = [];
@@ -122,15 +140,43 @@ const QuizResults: React.FC<QuizResultsProps> = ({
           <p className="text-gray-500">Based on your answers, these are your best matches:</p>
         </div>
 
-        {/* Country Tabs - Improved for Mobile */}
+        {/* Country Tabs - Enhanced for Mobile with Horizontal Scroll */}
         {isMobile ? (
-          <div className="relative mb-6 border border-gray-100 rounded-lg shadow-inner bg-gray-50">
-            <ScrollArea className="w-full py-2">
-              <div className="flex px-2 pb-2 gap-x-2 min-w-max">
+          <div className="relative mb-6">
+            {/* Scroll navigation buttons */}
+            <div className="flex items-center justify-between mb-2">
+              <button 
+                onClick={() => handleScroll('left')} 
+                className="p-1 bg-gray-100 rounded-full text-gray-600 hover:bg-gray-200"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <span className="text-xs text-gray-500">Scroll to see all countries</span>
+              <button 
+                onClick={() => handleScroll('right')} 
+                className="p-1 bg-gray-100 rounded-full text-gray-600 hover:bg-gray-200"
+                aria-label="Scroll right"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+            
+            {/* Scrollable container with visual indicators */}
+            <div className="relative border border-gray-100 rounded-lg shadow-inner bg-gray-50 overflow-hidden">
+              <div 
+                ref={scrollRef}
+                className="flex py-2 px-2 gap-x-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
+                style={{ 
+                  msOverflowStyle: 'none', 
+                  scrollbarWidth: 'thin',
+                  WebkitOverflowScrolling: 'touch' 
+                }}
+              >
                 {recommendedCountries.map((country, index) => (
                   <button
                     key={country}
-                    className={`py-2 px-3 text-sm font-medium flex items-center justify-center gap-1 rounded-lg transition-all duration-300 ${
+                    className={`py-2 px-3 min-w-[120px] text-sm font-medium flex items-center justify-center gap-1 rounded-lg transition-all duration-300 flex-shrink-0 ${
                       activeTab === country
                         ? 'bg-[#3b8183]/20 text-[#174a58] shadow-md border border-[#3b8183]/30'
                         : 'bg-white border border-gray-100 text-gray-600 hover:text-[#174a58]'
@@ -154,7 +200,12 @@ const QuizResults: React.FC<QuizResultsProps> = ({
                   </button>
                 ))}
               </div>
-            </ScrollArea>
+              
+              {/* Scroll indicators */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-100">
+                <div className="h-full bg-[#3b8183]/30 animate-scroll-indicator w-1/3"></div>
+              </div>
+            </div>
           </div>
         ) : (
           <Tabs defaultValue={resultCountry} onValueChange={(value) => handleTabChange(value as Country)} className="w-full mb-4">
