@@ -56,11 +56,18 @@ const Index = () => {
         <Header />
         
         <header className="text-center mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-poppins text-gray-800 mb-3 sm:mb-4 tracking-tight font-extrabold py-2 relative inline-block">
-            <span className="bg-gradient-to-r from-[#174a58] to-[#3b8183] bg-clip-text text-transparent">
-              Which Country Should You Study In?
-            </span>
-          </h1>
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <img
+              src="/edu.png"
+              alt="Education Icon"
+              className="w-12 h-12 sm:w-16 sm:h-16 object-contain animate-bounce-gentle"
+            />
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-poppins text-gray-800 tracking-tight font-extrabold py-2 relative inline-block">
+              <span className="bg-gradient-to-r from-[#174a58] to-[#3b8183] bg-clip-text text-transparent">
+                Which Country Should You Study In?
+              </span>
+            </h1>
+          </div>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-2">
             Take this quick quiz to discover your perfect study abroad destination based on your preferences, budget, and career goals.
           </p>
