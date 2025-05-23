@@ -1,14 +1,15 @@
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Card, CardContent } from './ui/card';
 
 interface TitleCardProps {
   title: string;
   subtitle?: string;
   showImage?: boolean;
+  children?: ReactNode;
 }
 
-const TitleCard: React.FC<TitleCardProps> = ({ title, subtitle, showImage = true }) => {
+const TitleCard: React.FC<TitleCardProps> = ({ title, subtitle, showImage = true, children }) => {
   return (
     <Card className="mb-6 shadow-md overflow-hidden">
       <div className="bg-gradient-to-r from-[#174a58] to-[#3b8183] p-4 sm:p-6 text-white flex items-center">
@@ -26,9 +27,7 @@ const TitleCard: React.FC<TitleCardProps> = ({ title, subtitle, showImage = true
           {subtitle && <p className="text-sm sm:text-base opacity-90 mt-1">{subtitle}</p>}
         </div>
       </div>
-      <CardContent className="p-0">
-        {/* Card content will be inserted here */}
-      </CardContent>
+      {children}
     </Card>
   );
 };
