@@ -1,10 +1,10 @@
+
 import React, { useState } from 'react';
 import QuizContainer from '@/components/QuizContainer';
 import Header from '@/components/Header';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
 import { toast } from '@/components/ui/sonner';
 import { supabase } from '@/integrations/supabase/client';
-import TitleCard from '@/components/TitleCard';
 
 const Index = () => {
   const [leadSubmitted, setLeadSubmitted] = useState(false);
@@ -55,11 +55,16 @@ const Index = () => {
       <div className="max-w-4xl mx-auto">
         <Header />
         
-        <TitleCard 
-          title="Which Country Should You Study In?" 
-          subtitle="Take this quick quiz to discover your perfect study abroad destination based on your preferences, budget, and career goals."
-          showImage={true}
-        />
+        <header className="text-center mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-poppins text-gray-800 mb-3 sm:mb-4 tracking-tight font-extrabold py-2 relative inline-block">
+            <span className="bg-gradient-to-r from-[#174a58] to-[#3b8183] bg-clip-text text-transparent">
+              Which Country Should You Study In?
+            </span>
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-2">
+            Take this quick quiz to discover your perfect study abroad destination based on your preferences, budget, and career goals.
+          </p>
+        </header>
         
         {!leadSubmitted ? (
           <div className="max-w-xl mx-auto mb-8 animate-fade-in">

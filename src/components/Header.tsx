@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Menu } from 'lucide-react';
 
@@ -8,7 +7,7 @@ const Header = () => {
       <div className="flex items-center">
         {/* Clean logo image without background or container */}
         <img
-          src="/edu.png" // Using the edu.png image from public directory
+          src="/edu.png" // Replace with your image path
           alt="EduSync Logo"
           className="w-10 h-10 sm:w-12 sm:h-12 mr-2 sm:mr-3 object-contain"
         />
