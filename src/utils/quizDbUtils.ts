@@ -4,22 +4,22 @@ import { Country } from '../types/quiz';
 import { toast } from '@/components/ui/sonner';
 
 /**
- * Updates an existing lead record with the best country result
- * @param id Lead ID to update
+ * Updates an existing lead record with the best country result using student_id
+ * @param studentId Student ID to update
  * @param bestCountry The best country result
  */
-export const updateLeadWithId = async (id: string, bestCountry: Country) => {
+export const updateLeadWithId = async (studentId: string, bestCountry: Country) => {
   try {
-    console.log("Updating lead with ID:", id, "Best country:", bestCountry);
+    console.log("Updating lead with student_id:", studentId, "Best country:", bestCountry);
     
     const { error } = await supabase
       .from('student_leads')
       .update({ best_country: bestCountry })
-      .eq('id', id);
+      .eq('student_id', studentId);
       
     if (error) throw error;
     
-    console.log("Successfully updated lead with ID:", id);
+    console.log("Successfully updated lead with student_id:", studentId);
   } catch (error) {
     console.error('Error updating lead:', error);
   }
@@ -43,17 +43,17 @@ export const updateBestCountryInDatabase = async (bestCountry: Country) => {
     if (fetchError) throw fetchError;
     
     if (recentLeads && recentLeads.length > 0) {
-      const leadId = recentLeads[0].id;
+      const studentId = recentLeads[0].student_id;
       
-      // Update the lead with the best country
+      // Update the lead with the best country using student_id
       const { error: updateError } = await supabase
         .from('student_leads')
         .update({ best_country: bestCountry })
-        .eq('id', leadId);
+        .eq('student_id', studentId);
         
       if (updateError) throw updateError;
       
-      console.log("Successfully updated best_country for lead:", leadId);
+      console.log("Successfully updated best_country for lead:", studentId);
     }
   } catch (error) {
     console.error('Error updating best country in database:', error);

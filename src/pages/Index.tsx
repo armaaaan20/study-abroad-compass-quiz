@@ -27,10 +27,10 @@ const Index = () => {
         
       if (error) throw error;
       
-      // Store the lead ID for later updating
+      // Store the student_id for later updating (now using student_id as primary key)
       if (data && data.length > 0) {
-        setLeadId(data[0].id);
-        console.log("Created new lead with ID:", data[0].id);
+        setLeadId(data[0].student_id);
+        console.log("Created new lead with student_id:", data[0].student_id);
       }
       
       setLeadSubmitted(true);
