@@ -16,7 +16,7 @@ export type Database = {
     Tables: {
       student_leads: {
         Row: {
-          best_country: string
+          best_country: string | null
           created_at: string
           email: string
           name: string
@@ -24,7 +24,7 @@ export type Database = {
           whatsapp: string
         }
         Insert: {
-          best_country: string
+          best_country?: string | null
           created_at?: string
           email: string
           name: string
@@ -32,7 +32,7 @@ export type Database = {
           whatsapp: string
         }
         Update: {
-          best_country?: string
+          best_country?: string | null
           created_at?: string
           email?: string
           name?: string
