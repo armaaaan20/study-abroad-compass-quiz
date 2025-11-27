@@ -37,6 +37,8 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          VITE_SUPABASE_URL: https://tjhspfiyaarceqmwdptj.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaHNwZml5YWFyY2VxbXdkcHRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyMTcwNTAsImV4cCI6MjA3OTc5MzA1MH0.yzNlEJ9f-Fbucip2jnn2ML567Pa8bPoCOpto2uatCzs
           
       - name: List build output
         run: ls -la dist
